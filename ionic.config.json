@@ -1,0 +1,7 @@
+{
+  "name": "ChambaNow",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
