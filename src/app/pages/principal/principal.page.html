@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Página Principal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarSesion()" color="danger">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2>¡Bienvenido/a, {{ usuario }}! 🎉</h2>
+  <ion-card class="ion-margin-top">
+    <ion-card-header>
+      <ion-card-title>Detalles de la Sesión </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Usuario:</strong> {{ usuario }}</p>
+      <p><strong>Contraseña Enviada:</strong> {{ password }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-card *ngFor="let oferta of ofertas" (click)="verDetalle(oferta.id)"
+      class="ion-activatable ripple-parent ion-margin-bottom">
+      <ion-ripple-effect></ion-ripple-effect>
+
+      <ion-item lines="none">
+        <ion-avatar slot="start" class="ion-margin-end">
+
+          <img [src]="oferta.imagenUrl" alt="Logo de {{ oferta.empresa }}">
+        </ion-avatar>
+
+        <ion-label>
+          <h3>{{ oferta.titulo }}</h3>
+          <p>{{ oferta.empresa }}</p>
+          <ion-note color="warning" class="ion-padding-top ion-text-wrap">
+            **Sueldo:** {{ oferta.sueldo }}
+          </ion-note>
+          <ion-note color="medium">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ oferta.ubicacion }}
+          </ion-note>
+        </ion-label>
+      </ion-item>
+
+      <ion-card-content>
+        <p>{{ oferta.resumen }}</p>
+
+        <ion-button fill="clear" size="small" (click)="verDetalle(oferta.id)" type="button">
+          Ver más detalles
+        </ion-button>
+
+      </ion-card-content>
+
+    </ion-card>
+  </ion-list>
+  <hr>
+
+</ion-content>

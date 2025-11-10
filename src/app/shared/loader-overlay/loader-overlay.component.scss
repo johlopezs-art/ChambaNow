@@ -1,0 +1,51 @@
+/* src/app/components/loader-overlay/loader-overlay.component.scss */
+
+.overlay {
+    /* Fija el overlay para cubrir toda la ventana */
+    position: fixed;
+    /* inset: 0 es un atajo para top: 0; right: 0; bottom: 0; left: 0; */
+    inset: 0; 
+    
+    /* Fondo semi-transparente oscuro */
+    background: rgba(0, 0, 0, .45); 
+    
+    /* Centra el spinner */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Asegura que el loader esté por encima de todo */
+    z-index: 9999; 
+    
+    /* Añade un sutil desenfoque al contenido debajo */
+    backdrop-filter: blur(1px);
+}
+
+.spinner {
+    /* Define el tamaño del contenedor del spinner */
+    width: 75px;
+    height: 75px;
+    
+    /* Lo hace circular */
+    border-radius: 50%;
+    
+    /* Base del borde (color claro o transparente) */
+    border: 8px solid rgba(30, 126, 229, .20); 
+    
+    /* Color de la parte que se anima (color primario más opaco) */
+    border-top-color: rgba(30, 126, 229, .80); 
+    
+    /* Animación: nombre 'spin', duración 0.9s, velocidad constante, repetición infinita */
+    animation: spin 0.9s linear infinite;
+}
+
+/* Añade esto a loader-overlay.component.scss */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to { 
+        transform: rotate(360deg);
+    }
+}

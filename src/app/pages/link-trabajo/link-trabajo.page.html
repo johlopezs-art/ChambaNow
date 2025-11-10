@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/principal"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ trabajo?.titulo || 'Detalle de Trabajo' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div *ngIf="trabajo" class="ion-text-center ion-margin-bottom">
+    <ion-avatar class="trabajo-avatar">
+      <img [src]="trabajo.imagenUrl" alt="Logo de {{ trabajo.empresa }}">
+    </ion-avatar>
+    <h1>{{ trabajo.titulo }}</h1>
+    <h2>{{ trabajo.empresa }}</h2>
+    <ion-chip color="medium">
+      <ion-icon name="location-outline"></ion-icon>
+      <ion-label>{{ trabajo.ubicacion }}</ion-label>
+    </ion-chip>
+    <ion-chip color="warning">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label>{{ trabajo.sueldo }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <ion-card *ngIf="trabajo">
+    <ion-card-header>
+      <ion-card-subtitle>Descripción del Puesto</ion-card-subtitle>
+      <ion-card-title>Detalle Completo</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p class="ion-text-wrap">{{ trabajo.descripcionCompleta }}</p>
+      
+      <ion-list lines="full" class="ion-margin-top">
+        <ion-list-header>
+          <ion-label color="primary">Requisitos Principales</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let req of trabajo.requisitos">
+          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+          <ion-label>{{ req }}</ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <!-- 🔹 Botón con evento -->
+      <ion-button expand="block" class="ion-margin-top" color="success" (click)="postularTrabajo()">
+        <ion-icon slot="start" name="send"></ion-icon>
+        Postular Ahora
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- 🔹 Animación Lottie -->
+ <!-- 🔹 Overlay de animación -->
+<div *ngIf="mostrarAnimacion" class="overlay-animacion">
+  <div class="animacion-contenedor">
+    <ng-lottie 
+      [options]="{
+        path: '/assets/animation/sentemail.json',
+        autoplay: true,
+        loop: false
+      }"
+      style="width: 220px; height: 220px;">
+    </ng-lottie>
+    <ion-text color="success">
+      <h2>¡Postulación enviada con éxito!</h2>
+    </ion-text>
+  </div>
+</div>
+
+
+  <!-- 🔹 Cargando -->
+  <ion-spinner *ngIf="cargando" name="crescent" color="primary" class="ion-margin-top"></ion-spinner>
+
+  <div *ngIf="!trabajo && !cargando && !mostrarAnimacion">
+    <ion-note color="warning">No se pudo cargar la información de este trabajo.</ion-note>
+  </div>
+
+</ion-content>

@@ -5,10 +5,20 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 
+import { provideLottieOptions } from "ngx-lottie";
+import player from 'lottie-web';// Mantenido por si se usa en otras partes
+
+// La función de fábrica debe estar correctamente definida:
+export function playerFactory() {
+  return import("lottie-web");
+}
+
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideLottieOptions({ player: playerFactory}),
   ],
 });
