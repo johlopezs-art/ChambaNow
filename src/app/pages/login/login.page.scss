@@ -1,0 +1,124 @@
+// 🎨 Variables de color
+$chambanow-orange: #ff7a00;
+$chambanow-gray: #555;
+$chambanow-bg: #ffffff;
+
+// 🚫 Quitar la barra superior (toolbar / header)
+ion-header,
+ion-toolbar {
+  display: none !important;
+}
+
+// 🧭 Contenedor principal
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: $chambanow-bg;
+  padding: 20px;
+}
+
+// 🖼️ Logo
+.logo {
+  width: 160px;
+  margin-bottom: 40px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+// 🧩 Tarjeta de login
+.login-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  animation: fadeInUp 0.8s ease;
+}
+
+// 🧾 Campos de entrada
+ion-item {
+  --background: transparent;
+  --highlight-color-focused: $chambanow-orange;
+  --color: $chambanow-gray;
+  font-size: 15px;
+  margin-bottom: 8px;
+  --min-height: 58px; // un poco más de altura para evitar solape
+
+  ion-label {
+    color: $chambanow-gray;
+    font-size: 14px;
+    transform: translateY(3px); // baja el label para no tapar texto
+  }
+
+  ion-input {
+    font-size: 16px;
+    padding-top: 6px; // separa el texto del label
+  }
+}
+
+// 🧠 Mensajes de error
+ion-note {
+  font-size: 12px;
+  margin-left: 16px;
+  color: #e74c3c;
+}
+
+// 🔘 Botón de login
+.login-button {
+  --background: $chambanow-orange;
+  --background-hover: #e96e00;
+  --border-radius: 10px;
+  --box-shadow: 0 4px 10px rgba(255, 122, 0, 0.4);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+  height: 45px;
+}
+
+// 🧷 Enlace de registro
+.register-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: $chambanow-gray;
+  text-align: center;
+
+  a {
+    color: $chambanow-orange;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ✨ Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

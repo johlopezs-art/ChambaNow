@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
@@ -10,67 +10,55 @@ import { LoaderOverlayComponent } from 'src/app/shared/loader-overlay/loader-ove
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule, LoaderOverlayComponent]
+  imports: [CommonModule, IonicModule, ReactiveFormsModule, LoaderOverlayComponent],
 })
 export class LoginPage {
-  @ViewChild('loader')
-  loader?: LoaderOverlayComponent;
+  @ViewChild('loader') loader?: LoaderOverlayComponent;
 
-  private fb: FormBuilder = inject(FormBuilder);
-  private router: Router = inject(Router);
-  private toastCtrl: ToastController = inject(ToastController);
-
-  // La propiedad 'visible' ya no es necesaria si solo usas el LoaderOverlayComponent
-  // public visible: boolean = false; 
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController);
 
   form: FormGroup = this.fb.group({
-    usuario: ["", [Validators.required, Validators.minLength(4)]],
-    password: ["", [Validators.required, Validators.minLength(5)]]
+    usuario: ['', [Validators.required, Validators.minLength(4)]],
+    password: ['', [Validators.required, Validators.minLength(5)]],
   });
 
   async onSubmit(): Promise<void> {
-
     if (this.form.invalid) {
-      const t: HTMLIonToastElement = await this.toastCtrl.create({
-        message: "Por favor, rellene todos los campos",
+      const toast = await this.toastCtrl.create({
+        message: 'Por favor, rellene todos los campos correctamente.',
         duration: 2000,
-        color: "danger"
+        color: 'danger',
       });
-
-      await t.present();
+      await toast.present();
+      this.form.markAllAsTouched();
       return;
     }
 
-    // APLICAMOS EL EFECTO DE CARGA AQUÍ (ej. 3 segundos)
-    // El método showFor es más adecuado para simular el tiempo de la llamada API.
-    this.loader?.showFor(3000); // Muestra el loader por 3 segundos
+    // Mostrar loader (3 segundos)
+    this.loader?.showFor(3000);
 
     const { usuario, password } = this.form.value;
 
-    // --- Simular la llamada API y navegación ---
-    // En lugar de hacer un timeout manual, navegaremos después de la simulación
-    // El efecto visual del loader lo hace el componente LoaderOverlayComponent.
+    // Simular tiempo de espera (API fake)
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    // Simular el tiempo de la llamada API (si el LoaderOverlayComponent no lo hace)
-    await new Promise(resolve => setTimeout(resolve, 3000));
-
-    // Después de que la simulación de la API termine, navegamos.
+    // Navegar a la página principal
     this.router.navigate(['/principal'], {
-      state: {
-        usuario,
-        password
-      },
+      state: { usuario, password },
     });
   }
 
-  // ELIMINAR ESTA FUNCIÓN:
-  /*
-  inicarCarga5s(): void {
-    this.loader?.showFor(5000); 
-  }
-  */
-
   irARegistro() {
-    this.router.navigate(['/registro']);
+    // Navegación programática segura
+    this.router.navigate(['/registro']).then(
+      (ok) => {
+        if (!ok) {
+          console.error('No se pudo navegar a /registro');
+        }
+      },
+      (err) => console.error('Error de navegación:', err)
+    );
   }
 }

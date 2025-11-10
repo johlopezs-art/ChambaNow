@@ -5,42 +5,47 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <img src="assets/icon/logo.png" alt="ChambaNow Logo" class="login-logo" />
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
+    <!-- Usuario -->
     <ion-item>
       <ion-label position="floating">Usuario</ion-label>
       <ion-input formControlName="usuario" autocomplete="username"></ion-input>
     </ion-item>
-
     <ion-note color="danger" *ngIf="form.get('usuario')?.touched && form.get('usuario')?.invalid">
-      El Usuario es obligatorio (mín 4)
+      El usuario es obligatorio (mín. 4 caracteres)
     </ion-note>
 
+    <!-- Contraseña -->
     <ion-item class="ion-margin-top">
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input formControlName="password" type="password" autocomplete="current-password"></ion-input>
+      <ion-input
+        formControlName="password"
+        type="password"
+        autocomplete="current-password"
+      ></ion-input>
     </ion-item>
-
     <ion-note color="danger" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
       La contraseña es obligatoria y debe tener un mínimo de 5 caracteres.
     </ion-note>
 
+    <!-- Botón de inicio de sesión -->
     <ion-button type="submit" expand="block" class="ion-margin-top" [disabled]="form.invalid">
       <ion-icon slot="start" name="log-in-outline"></ion-icon>
       Iniciar Sesión
     </ion-button>
-    
   </form>
 
+  <!-- Enlace al registro -->
   <ion-row class="ion-margin-top">
     <ion-col class="ion-text-center">
-      <ion-button routerLink="/registro" fill="clear" size="small" color="medium" class="ion-margin-top">
+      <ion-button fill="clear" size="small" color="medium" (click)="irARegistro()">
         ¿No tienes cuenta? Regístrate aquí
       </ion-button>
     </ion-col>
   </ion-row>
 
+  <!-- Loader -->
+  <app-loader-overlay #loader [defaultDuration]="5000"></app-loader-overlay>
 </ion-content>
-
-<app-loader-overlay #loader [defaultDuration]="5000"></app-loader-overlay>
