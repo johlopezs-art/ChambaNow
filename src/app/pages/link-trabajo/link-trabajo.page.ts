@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { LottieComponent } from 'ngx-lottie'; // ✅ cambio aquí
+import { LottieComponent } from 'ngx-lottie'; 
 
 
 interface OfertaTrabajo {
@@ -23,7 +23,7 @@ interface OfertaTrabajo {
   styleUrls: ['./link-trabajo.page.scss'],
   standalone: true,
   imports: [CommonModule, IonicModule, LottieComponent]
- // ✅ cambio aquí
+ 
 })
 export class LinkTrabajoPage implements OnInit {
 

@@ -1,4 +1,4 @@
-/* 🔹 Fondo semi-transparente que cubre toda la pantalla */
+
 .overlay-animacion {
   position: fixed;
   top: 0;
@@ -9,10 +9,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999; /* aseguramos que esté encima de todo */
+  z-index: 9999; 
 }
 
-/* 🔹 Contenedor centrado de la animación */
+
 .animacion-contenedor {
   background: #ffffff;
   padding: 30px;
@@ -22,7 +22,7 @@
   animation: aparecer 0.4s ease-in-out;
 }
 
-/* 🔹 Pequeña animación de entrada */
+
 @keyframes aparecer {
   from {
     transform: scale(0.8);

@@ -44,7 +44,7 @@
         </ion-item>
       </ion-list>
       
-      <!-- 🔹 Botón con evento -->
+      
       <ion-button expand="block" class="ion-margin-top" color="success" (click)="postularTrabajo()">
         <ion-icon slot="start" name="send"></ion-icon>
         Postular Ahora
@@ -52,8 +52,7 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- 🔹 Animación Lottie -->
- <!-- 🔹 Overlay de animación -->
+ 
 <div *ngIf="mostrarAnimacion" class="overlay-animacion">
   <div class="animacion-contenedor">
     <ng-lottie 
@@ -71,7 +70,7 @@
 </div>
 
 
-  <!-- 🔹 Cargando -->
+
   <ion-spinner *ngIf="cargando" name="crescent" color="primary" class="ion-margin-top"></ion-spinner>
 
   <div *ngIf="!trabajo && !cargando && !mostrarAnimacion">
