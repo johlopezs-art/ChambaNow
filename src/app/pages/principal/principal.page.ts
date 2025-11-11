@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-// Estructura de datos para las ofertas
+
 interface OfertaTrabajo {
   id: number;
   titulo: string;
@@ -77,15 +77,15 @@ export class PrincipalPage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // ✅ Detectar el scroll y ocultar/mostrar el header
+ 
   onScroll(event: any) {
     const scrollTop = event.detail.scrollTop;
 
     if (scrollTop > this.lastScrollTop && scrollTop > 50) {
-      // Bajando → ocultar
+     
       this.headerHidden = true;
     } else if (scrollTop < this.lastScrollTop) {
-      // Subiendo → mostrar
+      
       this.headerHidden = false;
     }
 
