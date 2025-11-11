@@ -1,9 +1,9 @@
-/* ====== COLORES DE CHAMBANOW ====== */
+
 $chambanow-blue: #0078ff;
 $chambanow-orange: #ff7b00;
 $chambanow-light: #f8f9fb;
 
-/* ====== ESTILOS PRINCIPALES ====== */
+
 ion-content {
   --background: linear-gradient(180deg, #ffffff 0%, #e9f3ff 100%);
   display: flex;
@@ -40,7 +40,7 @@ ion-note {
   margin-top: 0.5rem;
 }
 
-/* ====== BOTÓN FIJO ABAJO ====== */
+
 .return-button {
   position: absolute;
   bottom: 35px;
@@ -61,14 +61,14 @@ ion-note {
   }
 }
 
-/* ====== ANIMACIÓN ====== */
+
 ng-lottie {
   display: block;
   margin: 0 auto;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
-/* ====== ENTRADA SUAVE ====== */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
