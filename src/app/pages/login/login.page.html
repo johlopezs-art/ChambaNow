@@ -8,7 +8,7 @@
   <img src="assets/icon/logo.png" alt="ChambaNow Logo" class="login-logo" />
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <!-- Usuario -->
+  
     <ion-item>
       <ion-label position="floating">Usuario</ion-label>
       <ion-input formControlName="usuario" autocomplete="username"></ion-input>
@@ -17,7 +17,7 @@
       El usuario es obligatorio (mín. 4 caracteres)
     </ion-note>
 
-    <!-- Contraseña -->
+    
     <ion-item class="ion-margin-top">
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input
@@ -30,14 +30,14 @@
       La contraseña es obligatoria y debe tener un mínimo de 5 caracteres.
     </ion-note>
 
-    <!-- Botón de inicio de sesión -->
+   
     <ion-button type="submit" expand="block" class="ion-margin-top" [disabled]="form.invalid">
       <ion-icon slot="start" name="log-in-outline"></ion-icon>
       Iniciar Sesión
     </ion-button>
   </form>
 
-  <!-- Enlace al registro -->
+  
   <ion-row class="ion-margin-top">
     <ion-col class="ion-text-center">
       <ion-button fill="clear" size="small" color="medium" (click)="irARegistro()">
@@ -46,6 +46,6 @@
     </ion-col>
   </ion-row>
 
-  <!-- Loader -->
+  
   <app-loader-overlay #loader [defaultDuration]="5000"></app-loader-overlay>
 </ion-content>

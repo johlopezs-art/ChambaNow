@@ -1,15 +1,15 @@
-// 🎨 Variables de color
+
 $chambanow-orange: #ff7a00;
 $chambanow-gray: #555;
 $chambanow-bg: #ffffff;
 
-// 🚫 Quitar la barra superior (toolbar / header)
+
 ion-header,
 ion-toolbar {
   display: none !important;
 }
 
-// 🧭 Contenedor principal
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -20,14 +20,14 @@ ion-toolbar {
   padding: 20px;
 }
 
-// 🖼️ Logo
+
 .logo {
   width: 160px;
   margin-bottom: 40px;
   animation: fadeIn 1s ease-in-out;
 }
 
-// 🧩 Tarjeta de login
+
 .login-card {
   background: #fff;
   border-radius: 20px;
@@ -41,35 +41,35 @@ ion-toolbar {
   animation: fadeInUp 0.8s ease;
 }
 
-// 🧾 Campos de entrada
+
 ion-item {
   --background: transparent;
   --highlight-color-focused: $chambanow-orange;
   --color: $chambanow-gray;
   font-size: 15px;
   margin-bottom: 8px;
-  --min-height: 58px; // un poco más de altura para evitar solape
+  --min-height: 58px; 
 
   ion-label {
     color: $chambanow-gray;
     font-size: 14px;
-    transform: translateY(3px); // baja el label para no tapar texto
+    transform: translateY(3px); 
   }
 
   ion-input {
     font-size: 16px;
-    padding-top: 6px; // separa el texto del label
+    padding-top: 6px; 
   }
 }
 
-// 🧠 Mensajes de error
+
 ion-note {
   font-size: 12px;
   margin-left: 16px;
   color: #e74c3c;
 }
 
-// 🔘 Botón de login
+
 .login-button {
   --background: $chambanow-orange;
   --background-hover: #e96e00;
@@ -82,7 +82,7 @@ ion-note {
   height: 45px;
 }
 
-// 🧷 Enlace de registro
+
 .register-text {
   margin-top: 20px;
   font-size: 14px;
@@ -100,7 +100,7 @@ ion-note {
   }
 }
 
-// ✨ Animaciones
+
 @keyframes fadeIn {
   from {
     opacity: 0;
