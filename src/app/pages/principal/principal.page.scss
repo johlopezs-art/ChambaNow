@@ -1,0 +1,137 @@
+// 🎨 Paleta azul
+$chambanow-blue: #007bff;
+$chambanow-blue-dark: #0056b3;
+$chambanow-gray: #555;
+$chambanow-bg: #ffffff;
+
+// Fondo y padding general
+ion-content {
+  --background: $chambanow-bg;
+  padding: 20px;
+}
+
+/* 🔝 Header animado */
+ion-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25);
+  --background: linear-gradient(90deg, $chambanow-blue, $chambanow-blue-dark);
+  --color: #fff;
+}
+
+ion-header.hidden {
+  transform: translateY(-100%);
+  box-shadow: none;
+}
+
+/* 🔠 Título */
+ion-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* 🔘 Botón salir */
+ion-button[color='danger'] {
+  --background: #ff4d4d;
+  --color: #fff;
+  --border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    --background: #e63939;
+  }
+
+  ion-icon {
+    margin-right: 6px;
+  }
+}
+
+/* 👋 Bienvenida */
+h2 {
+  font-size: 1.4rem;
+  color: $chambanow-blue-dark;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 700;
+}
+
+/* 🧾 Card principal */
+ion-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-left: 4px solid $chambanow-blue;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  ion-card-title {
+    color: $chambanow-blue;
+    font-weight: 600;
+  }
+
+  ion-card-content p {
+    font-size: 15px;
+    color: $chambanow-gray;
+  }
+}
+
+/* 💼 Lista de ofertas */
+ion-list {
+  margin-top: 20px;
+}
+
+ion-avatar img {
+  border-radius: 8px;
+  border: 2px solid rgba(0, 123, 255, 0.3);
+}
+
+ion-label h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $chambanow-gray;
+}
+
+ion-label p {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+ion-note[color='warning'] {
+  font-weight: 600;
+  color: $chambanow-blue !important;
+  display: block;
+  margin-top: 4px;
+}
+
+ion-note[color='medium'] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  color: #777 !important;
+}
+
+/* 🔘 Botón "Ver más detalles" */
+ion-button[fill='clear'] {
+  color: $chambanow-blue;
+  font-weight: 600;
+  --ripple-color: rgba(0, 123, 255, 0.2);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* 🧱 Separador inferior */
+hr {
+  margin-top: 30px;
+  border: none;
+  border-top: 1px solid #eee;
+}

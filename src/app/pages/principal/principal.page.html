@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [class.hidden]="headerHidden">
   <ion-toolbar>
     <ion-title>Página Principal</ion-title>
     <ion-buttons slot="end">
@@ -10,12 +10,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" (ionScroll)="onScroll($event)" scrollEvents="true">
 
   <h2>¡Bienvenido/a, {{ usuario }}! 🎉</h2>
+
   <ion-card class="ion-margin-top">
     <ion-card-header>
-      <ion-card-title>Detalles de la Sesión </ion-card-title>
+      <ion-card-title>Detalles de la Sesión</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p><strong>Usuario:</strong> {{ usuario }}</p>
@@ -24,14 +25,16 @@
   </ion-card>
 
   <ion-list>
-    <ion-card *ngFor="let oferta of ofertas" (click)="verDetalle(oferta.id)"
-      class="ion-activatable ripple-parent ion-margin-bottom">
+    <ion-card
+      *ngFor="let oferta of ofertas"
+      (click)="verDetalle(oferta.id)"
+      class="ion-activatable ripple-parent ion-margin-bottom"
+    >
       <ion-ripple-effect></ion-ripple-effect>
 
       <ion-item lines="none">
         <ion-avatar slot="start" class="ion-margin-end">
-
-          <img [src]="oferta.imagenUrl" alt="Logo de {{ oferta.empresa }}">
+          <img [src]="oferta.imagenUrl" alt="Logo de {{ oferta.empresa }}" />
         </ion-avatar>
 
         <ion-label>
@@ -53,11 +56,9 @@
         <ion-button fill="clear" size="small" (click)="verDetalle(oferta.id)" type="button">
           Ver más detalles
         </ion-button>
-
       </ion-card-content>
-
     </ion-card>
   </ion-list>
-  <hr>
 
+  <hr />
 </ion-content>
