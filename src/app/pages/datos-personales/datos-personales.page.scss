@@ -1,0 +1,77 @@
+// Fondo suave
+ion-content {
+  --background: #f4f5f8;
+}
+
+// Estilo del Avatar
+.avatar-section {
+  padding-top: 20px;
+  
+  .avatar-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--ion-color-primary);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .camera-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--ion-color-tertiary);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+  }
+}
+
+// Estilo de las Tarjetas
+.form-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  background: white;
+
+  ion-card-header {
+    padding-bottom: 0;
+  }
+
+  ion-card-subtitle {
+    color: var(--ion-color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+}
+
+// Inputs personalizados
+.custom-input {
+  --border-radius: 8px;
+  --highlight-color-focused: var(--ion-color-primary);
+  
+  .input-icon {
+    color: var(--ion-color-medium);
+    margin-right: 8px;
+  }
+}
+
+.geo-note {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+  margin-top: 8px;
+  text-align: center;
+  font-style: italic;
+}
