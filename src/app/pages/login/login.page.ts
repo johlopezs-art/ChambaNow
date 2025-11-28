@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { LoaderOverlayComponent } from 'src/app/shared/loader-overlay/loader-overlay.component';
+// 1. IMPORTAR EL SERVICIO DE AUTENTICACIÓN
+import { AuthenticationService } from '../../services/authentication';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,8 @@ export class LoginPage {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private toastCtrl = inject(ToastController);
+  // 2. INYECTAR EL SERVICIO
+  private authService = inject(AuthenticationService);
 
   form: FormGroup = this.fb.group({
     usuario: ['', [Validators.required, Validators.minLength(4)]],
@@ -43,6 +47,10 @@ export class LoginPage {
 
     // Simular tiempo de espera (API fake)
     await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // 3. ACTIVAR EL ESTADO DE LOGIN EN EL SERVICIO
+    // Esto es crucial: sin esto, el Guard te bloqueará aunque navegues.
+    this.authService.login();
 
     // Navegar a la página principal
     this.router.navigate(['/principal'], {
