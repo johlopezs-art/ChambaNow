@@ -2,7 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-
+// 1. IMPORTAMOS TU COMPONENTE DE MENÚ
+import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 
 interface OfertaTrabajo {
   id: number;
@@ -11,7 +12,7 @@ interface OfertaTrabajo {
   ubicacion: string;
   resumen: string;
   imagenUrl: string;
-  sueldo: string; 
+  sueldo: string;
 }
 
 @Component({
@@ -19,15 +20,17 @@ interface OfertaTrabajo {
   templateUrl: './principal.page.html',
   styleUrls: ['./principal.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule]
+  // 2. AGREGAMOS EL COMPONENTE A LOS IMPORTS
+  imports: [CommonModule, IonicModule, HeaderMenuComponent]
 })
 export class PrincipalPage implements OnInit {
 
   usuario: string = '';
-  password: string = ''; 
+  password: string = '';
   headerHidden = false;
   private lastScrollTop = 0;
 
+  // Tus datos de ofertas
   ofertas: OfertaTrabajo[] = [
     {
       id: 1,
@@ -35,7 +38,7 @@ export class PrincipalPage implements OnInit {
       empresa: 'Tech Solutions Ltda.',
       ubicacion: 'Santiago, CL',
       resumen: 'Desarrollo de interfaces de usuario robustas con Angular 17+ y TypeScript.',
-      imagenUrl: 'assets/icon/tech.jpg',
+      imagenUrl: 'assets/icon/tech.jpg', // Asegúrate de que esta imagen exista o usa un placeholder
       sueldo: '$1.500.000 CLP'
     },
     {
@@ -45,10 +48,10 @@ export class PrincipalPage implements OnInit {
       ubicacion: 'Viña del Mar, CL',
       resumen: 'Análisis e interpretación de grandes volúmenes de datos usando SQL y Python.',
       imagenUrl: 'assets/icon/datainsights.png',
-      sueldo: '$950.000 CLP' 
+      sueldo: '$950.000 CLP'
     }
   ];
-  
+
   private router: Router = inject(Router);
 
   constructor() {}
@@ -73,22 +76,21 @@ export class PrincipalPage implements OnInit {
     this.router.navigate(['/link-trabajo', trabajoId]);
   }
 
+  // Nota: La función cerrarSesion ya está en el HeaderMenuComponent,
+  // pero la dejamos aquí por si la necesitas para otra cosa.
   async cerrarSesion() {
     this.router.navigate(['/login']);
   }
 
- 
   onScroll(event: any) {
     const scrollTop = event.detail.scrollTop;
 
+    // Lógica simple para ocultar/mostrar header (opcional)
     if (scrollTop > this.lastScrollTop && scrollTop > 50) {
-     
       this.headerHidden = true;
     } else if (scrollTop < this.lastScrollTop) {
-      
       this.headerHidden = false;
     }
-
     this.lastScrollTop = scrollTop;
   }
 }

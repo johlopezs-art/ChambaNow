@@ -8,6 +8,9 @@ import { AppComponent } from './app/app.component';
 import { provideLottieOptions } from "ngx-lottie";
 import player from 'lottie-web';// Mantenido por si se usa en otras partes
 
+import { provideHttpClient } from '@angular/common/http';
+
+
 // La función de fábrica debe estar correctamente definida:
 export function playerFactory() {
   return import("lottie-web");
@@ -20,5 +23,6 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideLottieOptions({ player: playerFactory}),
+    provideHttpClient(),
   ],
 });
