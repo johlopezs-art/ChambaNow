@@ -39,5 +39,13 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () => import('./pages/error404/error404.page').then( m => m.Error404Page)
+  },
+  {
+    path: 'agregar',
+    loadComponent: () => import('./pages/agregar/agregar.page').then( m => m.AgregarPage)
+  },
+  {
+    path: 'modificar',
+    loadComponent: () => import('./pages/modificar/modificar.page').then( m => m.ModificarPage)
   }
 ];
