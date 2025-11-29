@@ -2,8 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-// 1. IMPORTAMOS TU COMPONENTE DE MENÚ
+// Importamos tu componente de menú
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
+// Importamos servicio de Base de Datos para recuperar sesión si se recarga
+import { DBTaskService } from '../../services/dbservice';
+// Importamos Iconos
+import { addIcons } from 'ionicons';
+import { locationOutline, arrowForwardOutline } from 'ionicons/icons';
 
 interface OfertaTrabajo {
   id: number;
@@ -20,17 +25,15 @@ interface OfertaTrabajo {
   templateUrl: './principal.page.html',
   styleUrls: ['./principal.page.scss'],
   standalone: true,
-  // 2. AGREGAMOS EL COMPONENTE A LOS IMPORTS
   imports: [CommonModule, IonicModule, HeaderMenuComponent]
 })
 export class PrincipalPage implements OnInit {
 
-  usuario: string = '';
-  password: string = '';
+  // 'usuario' ahora guardará el objeto completo que viene de la BD/API
+  usuario: any = null; 
   headerHidden = false;
   private lastScrollTop = 0;
 
-  // Tus datos de ofertas
   ofertas: OfertaTrabajo[] = [
     {
       id: 1,
@@ -38,7 +41,7 @@ export class PrincipalPage implements OnInit {
       empresa: 'Tech Solutions Ltda.',
       ubicacion: 'Santiago, CL',
       resumen: 'Desarrollo de interfaces de usuario robustas con Angular 17+ y TypeScript.',
-      imagenUrl: 'assets/icon/tech.jpg', // Asegúrate de que esta imagen exista o usa un placeholder
+      imagenUrl: 'assets/icon/tech.jpg', 
       sueldo: '$1.500.000 CLP'
     },
     {
@@ -52,23 +55,29 @@ export class PrincipalPage implements OnInit {
     }
   ];
 
-  private router: Router = inject(Router);
+  private router = inject(Router);
+  private dbTask = inject(DBTaskService);
 
-  constructor() {}
-
-  ngOnInit() {
-    this.recibirDatosDeLogin();
+  constructor() {
+    // IMPORTANTE: Registrar los iconos usados en el HTML
+    addIcons({ locationOutline, arrowForwardOutline });
   }
 
-  recibirDatosDeLogin() {
-    const navigationState = this.router.getCurrentNavigation()?.extras.state;
+  async ngOnInit() {
+    await this.cargarUsuario();
+  }
 
-    if (navigationState) {
-      this.usuario = navigationState['usuario'] || 'Invitado';
-      this.password = navigationState['password'] || '********';
-      console.log('Datos recibidos:', this.usuario, this.password);
+  async cargarUsuario() {
+    // 1. Intentamos obtener datos de la navegación (si venimos del Login)
+    const navigationState = this.router.getCurrentNavigation()?.extras.state;
+    
+    if (navigationState && navigationState['usuario']) {
+      this.usuario = navigationState['usuario'];
+      console.log('Usuario cargado desde Navegación:', this.usuario);
     } else {
-      console.warn('No se recibieron datos de navegación.');
+      // 2. Si recargamos la página, recuperamos desde el Storage local
+      this.usuario = await this.dbTask.getCurrentUser();
+      console.log('Usuario cargado desde Storage:', this.usuario);
     }
   }
 
@@ -76,16 +85,8 @@ export class PrincipalPage implements OnInit {
     this.router.navigate(['/link-trabajo', trabajoId]);
   }
 
-  // Nota: La función cerrarSesion ya está en el HeaderMenuComponent,
-  // pero la dejamos aquí por si la necesitas para otra cosa.
-  async cerrarSesion() {
-    this.router.navigate(['/login']);
-  }
-
   onScroll(event: any) {
     const scrollTop = event.detail.scrollTop;
-
-    // Lógica simple para ocultar/mostrar header (opcional)
     if (scrollTop > this.lastScrollTop && scrollTop > 50) {
       this.headerHidden = true;
     } else if (scrollTop < this.lastScrollTop) {

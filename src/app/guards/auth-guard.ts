@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthenticationService } from '../services/authentication';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(
-    private authService: AuthenticationService,
-    private router: Router
-  ) {}
+  // Usamos inject() para modernizar la inyección de dependencias
+  private router = inject(Router);
 
   canActivate(): boolean {
-    // 1. Preguntamos al servicio si está logueado
-    if (this.authService.isLoggedIn()) {
-      return true; // ✅ Pasa
+    // 1. Verificamos directamente en localStorage si existe la sesión
+    // Asumimos que guardaste algo bajo la llave 'usuario' o 'token' al hacer login
+    const usuarioLogueado = localStorage.getItem('usuario'); 
+
+    if (usuarioLogueado) {
+      return true; // ✅ Pasa, hay datos guardados
     } else {
-      // 2. Si NO está logueado, lo mandamos al Login
-      console.log('⛔ Acceso denegado, redirigiendo al Login...');
+      // 2. Si NO hay datos en localStorage, lo mandamos al Login
+      console.log('⛔ Acceso denegado (No hay sesión), redirigiendo al Login...');
       this.router.navigate(['/login']);
       return false; // 🚫 Bloqueado
     }

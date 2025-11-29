@@ -2,7 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterModule } from '@angular/router';
-import { AuthenticationService } from '../../services/authentication';
+// 1. ELIMINAMOS EL IMPORT DE AuthenticationService
 import { addIcons } from 'ionicons';
 import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ionicons/icons';
 
@@ -13,21 +13,21 @@ import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ion
   template: `
     <ion-header>
       <ion-toolbar color="primary">
-        <!-- Botón de "Atrás" (Opcional, solo sale si hay historial) -->
+        <!-- Botón de "Atrás" -->
         <ion-buttons slot="start">
           <ion-back-button defaultHref="/principal"></ion-back-button>
         </ion-buttons>
 
         <ion-title>{{ title }}</ion-title>
 
-        <!-- Botón del Menú (Tres puntos) -->
+        <!-- Botón del Menú -->
         <ion-buttons slot="end">
           <ion-button id="menu-trigger">
             <ion-icon [icon]="menuIcon"></ion-icon>
           </ion-button>
         </ion-buttons>
 
-        <!-- El Menú Desplegable (Popover) -->
+        <!-- Menú Desplegable -->
         <ion-popover trigger="menu-trigger" dismissOnSelect="true" side="bottom" alignment="end">
           <ng-template>
             <ion-content class="ion-no-padding">
@@ -49,6 +49,7 @@ import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ion
 
                 <div class="separator"></div>
 
+                <!-- Evento Click para Logout -->
                 <ion-item button (click)="logout()" detail="false" lines="none" class="logout-item">
                   <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
                   <ion-label color="danger">Cerrar Sesión</ion-label>
@@ -74,18 +75,24 @@ import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ion
 export class HeaderMenuComponent {
   @Input() title: string = 'ChambaNow';
 
-  menuIcon = ellipsisVertical; // El icono de los 3 puntos
+  menuIcon = ellipsisVertical;
 
-  private authService = inject(AuthenticationService);
+  // 2. ELIMINAMOS LA INYECCIÓN DEL SERVICIO DE AUTENTICACIÓN
+  // private authService = inject(AuthenticationService);
+  
   private router = inject(Router);
 
   constructor() {
-    // Registramos los iconos que usamos en el HTML
     addIcons({ ellipsisVertical, personOutline, homeOutline, logOutOutline });
   }
 
   logout() {
-    this.authService.logout();
+    // 3. LÓGICA MANUAL DE LOGOUT
+    // Limpiamos cualquier rastro de usuario o token guardado
+    localStorage.clear(); 
+    // O si usas claves especificas: localStorage.removeItem('usuario');
+
+    // Redirigimos al login
     this.router.navigate(['/login']);
   }
 }

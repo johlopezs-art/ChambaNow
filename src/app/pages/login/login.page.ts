@@ -4,8 +4,11 @@ import { Router } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { LoaderOverlayComponent } from 'src/app/shared/loader-overlay/loader-overlay.component';
-// 1. IMPORTAR EL SERVICIO DE AUTENTICACIÓN
-import { AuthenticationService } from '../../services/authentication';
+import { addIcons } from 'ionicons';
+import { logInOutline, mailOutline, lockClosedOutline } from 'ionicons/icons';
+import { ApiService } from '../../services/api';
+import { lastValueFrom } from 'rxjs';
+import { DBTaskService } from '../../services/dbservice';
 
 @Component({
   selector: 'app-login',
@@ -20,18 +23,24 @@ export class LoginPage {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private toastCtrl = inject(ToastController);
-  // 2. INYECTAR EL SERVICIO
-  private authService = inject(AuthenticationService);
+  private apiService = inject(ApiService);
+  
+  // 2. INYECTAR EL SERVICIO DE BASE DE DATOS
+  private dbTask = inject(DBTaskService);
 
   form: FormGroup = this.fb.group({
-    usuario: ['', [Validators.required, Validators.minLength(4)]],
+    email: ['', [Validators.required, Validators.email]], 
     password: ['', [Validators.required, Validators.minLength(5)]],
   });
+
+  constructor() {
+    addIcons({ logInOutline, mailOutline, lockClosedOutline });
+  }
 
   async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       const toast = await this.toastCtrl.create({
-        message: 'Por favor, rellene todos los campos correctamente.',
+        message: 'Por favor, introduce un correo válido y tu contraseña.',
         duration: 2000,
         color: 'danger',
       });
@@ -40,33 +49,42 @@ export class LoginPage {
       return;
     }
 
-    // Mostrar loader (3 segundos)
-    this.loader?.showFor(3000);
+    // Mostramos el loader (tiempo de seguridad 10s por si la red es lenta)
+    this.loader?.showFor(10000); 
 
-    const { usuario, password } = this.form.value;
+    const { email, password } = this.form.value;
 
-    // Simular tiempo de espera (API fake)
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    try {
+      const credentials = { email: email, password: password };
+      
+      // A. Llamada a la API (FastAPI)
+      // Usamos lastValueFrom para convertir el Observable en Promesa
+      const response = await lastValueFrom(this.apiService.login(credentials));
+      
+      // B. GUARDAR SESIÓN EN SQLITE Y STORAGE
+      // Llamamos al método que definimos en dbtask.service.ts
+      await this.dbTask.createSession(response);
 
-    // 3. ACTIVAR EL ESTADO DE LOGIN EN EL SERVICIO
-    // Esto es crucial: sin esto, el Guard te bloqueará aunque navegues.
-    this.authService.login();
+      // C. Navegar a la página principal
+      this.router.navigate(['/principal'], {
+        state: { usuario: response },
+      });
 
-    // Navegar a la página principal
-    this.router.navigate(['/principal'], {
-      state: { usuario, password },
-    });
+    } catch (error) {
+      console.error('Error login:', error);
+      const toast = await this.toastCtrl.create({
+        message: 'Correo o contraseña incorrectos',
+        duration: 3000,
+        color: 'danger',
+        position: 'bottom'
+      });
+      await toast.present();
+    } 
+    // Nota: El loader se ocultará automáticamente si usaste showFor,
+    // o puedes llamar a this.loader?.hide() en un bloque finally si tu componente lo soporta.
   }
 
   irARegistro() {
-    // Navegación programática segura
-    this.router.navigate(['/registro']).then(
-      (ok) => {
-        if (!ok) {
-          console.error('No se pudo navegar a /registro');
-        }
-      },
-      (err) => console.error('Error de navegación:', err)
-    );
+    this.router.navigate(['/registro']);
   }
 }

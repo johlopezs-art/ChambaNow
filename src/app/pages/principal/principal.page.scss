@@ -1,15 +1,14 @@
-
 $chambanow-blue: #007bff;
 $chambanow-blue-dark: #0056b3;
 $chambanow-gray: #555;
 $chambanow-bg: #ffffff;
 
-
+// Forzamos el fondo blanco del contenido principal
 ion-content {
-  --background: $chambanow-bg;
+  --background: #ffffff; 
+  --color: #000000; // Aseguramos texto negro base
   padding: 20px;
 }
-
 
 ion-header {
   position: sticky;
@@ -17,7 +16,8 @@ ion-header {
   z-index: 10;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25);
-  --background: linear-gradient(90deg, $chambanow-blue, $chambanow-blue-dark);
+  // Fondo degradado para el header
+  --background: linear-gradient(90deg, #007bff, #0056b3);
   --color: #fff;
 }
 
@@ -26,13 +26,11 @@ ion-header.hidden {
   box-shadow: none;
 }
 
-
 ion-title {
   font-size: 1.2rem;
   font-weight: 700;
   color: #fff;
 }
-
 
 ion-button[color='danger'] {
   --background: #ff4d4d;
@@ -50,7 +48,6 @@ ion-button[color='danger'] {
   }
 }
 
-
 h2 {
   font-size: 1.4rem;
   color: $chambanow-blue-dark;
@@ -59,12 +56,23 @@ h2 {
   font-weight: 700;
 }
 
+// --- ARREGLO DE FONDOS OSCUROS ---
+
+// Hacemos que la lista sea transparente para que se vea el fondo blanco del content
+ion-list {
+  background: transparent !important;
+  --ion-item-background: transparent;
+  margin-top: 20px;
+  padding-bottom: 20px; // Espacio extra al final
+}
 
 ion-card {
+  --background: #ffffff; // Forzamos blanco en la tarjeta (importante para modo oscuro)
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-left: 4px solid $chambanow-blue;
+  margin-bottom: 20px; // Separación entre tarjetas
 
   &:hover {
     transform: translateY(-3px);
@@ -82,10 +90,14 @@ ion-card {
   }
 }
 
-
-ion-list {
-  margin-top: 20px;
+// Esto es clave: El ion-item dentro de la card debe ser transparente
+// para que no pinte un fondo gris por defecto
+ion-item {
+  --background: transparent;
+  --inner-padding-end: 0;
 }
+
+// ----------------------------------
 
 ion-avatar img {
   border-radius: 8px;
@@ -95,12 +107,19 @@ ion-avatar img {
 ion-label h3 {
   font-size: 1.05rem;
   font-weight: 600;
-  color: $chambanow-gray;
+  color: $chambanow-gray; // Color gris oscuro para títulos
 }
 
 ion-label p {
   font-size: 0.9rem;
   color: #777;
+}
+
+ion-note[color='success'] {
+    font-weight: 600;
+    color: #28a745 !important; // Verde explícito
+    display: block;
+    margin-top: 4px;
 }
 
 ion-note[color='warning'] {
@@ -118,17 +137,16 @@ ion-note[color='medium'] {
   color: #777 !important;
 }
 
-
 ion-button[fill='clear'] {
   color: $chambanow-blue;
   font-weight: 600;
   --ripple-color: rgba(0, 123, 255, 0.2);
+  margin-right: 0; // Alinear a la derecha correctamente
 
   &:hover {
     text-decoration: underline;
   }
 }
-
 
 hr {
   margin-top: 30px;

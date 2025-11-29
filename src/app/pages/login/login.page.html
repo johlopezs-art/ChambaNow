@@ -1,43 +1,60 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <img src="assets/icon/logo.png" alt="ChambaNow Logo" class="login-logo" />
+  
+  <div class="ion-text-center ion-margin-bottom">
+    <!-- Asegúrate de tener la imagen en assets/icon/logo.png -->
+    <img src="assets/icon/logo.png" alt="ChambaNow Logo" class="login-logo" style="max-height: 150px; margin-top: 20px;" />
+  </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
   
-    <ion-item>
-      <ion-label position="floating">Usuario</ion-label>
-      <ion-input formControlName="usuario" autocomplete="username"></ion-input>
+    <!-- CAMPO EMAIL (Antes Usuario) -->
+    <ion-item lines="full">
+      <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
+      <ion-input 
+        label="Correo Electrónico" 
+        labelPlacement="floating"
+        formControlName="email" 
+        type="email"
+        placeholder="ejemplo@correo.com">
+      </ion-input>
     </ion-item>
-    <ion-note color="danger" *ngIf="form.get('usuario')?.touched && form.get('usuario')?.invalid">
-      El usuario es obligatorio (mín. 4 caracteres)
+    
+    <!-- Mensajes de error para Email -->
+    <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      <span *ngIf="form.get('email')?.errors?.['required']">El correo es obligatorio.</span>
+      <span *ngIf="form.get('email')?.errors?.['email']">Formato de correo inválido.</span>
     </ion-note>
 
-    
-    <ion-item class="ion-margin-top">
-      <ion-label position="floating">Contraseña</ion-label>
+    <!-- CAMPO PASSWORD -->
+    <ion-item lines="full" class="ion-margin-top">
+      <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
       <ion-input
+        label="Contraseña"
+        labelPlacement="floating"
         formControlName="password"
         type="password"
-        autocomplete="current-password"
       ></ion-input>
     </ion-item>
-    <ion-note color="danger" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
-      La contraseña es obligatoria y debe tener un mínimo de 5 caracteres.
+
+    <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      La contraseña es obligatoria (mín. 5 caracteres).
     </ion-note>
 
-   
-    <ion-button type="submit" expand="block" class="ion-margin-top" [disabled]="form.invalid">
+    <!-- BOTÓN INICIAR SESIÓN -->
+    <ion-button type="submit" expand="block" class="ion-margin-top" [disabled]="form.invalid" shape="round">
       <ion-icon slot="start" name="log-in-outline"></ion-icon>
       Iniciar Sesión
     </ion-button>
+
   </form>
 
-  
+  <!-- BOTÓN REGISTRO -->
   <ion-row class="ion-margin-top">
     <ion-col class="ion-text-center">
       <ion-button fill="clear" size="small" color="medium" (click)="irARegistro()">
@@ -46,6 +63,7 @@
     </ion-col>
   </ion-row>
 
-  
-  <app-loader-overlay #loader [defaultDuration]="5000"></app-loader-overlay>
+  <!-- LOADER -->
+  <app-loader-overlay #loader></app-loader-overlay>
+
 </ion-content>
