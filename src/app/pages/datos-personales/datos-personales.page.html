@@ -2,11 +2,14 @@
 
 <ion-content class="ion-padding bg-light">
 
-  <!-- SECCIÓN DE FOTO DE PERFIL (Visual) -->
+  <!-- SECCIÓN DE FOTO DE PERFIL -->
   <div class="avatar-section ion-text-center ion-margin-bottom">
     <div class="avatar-wrapper">
-      <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Avatar">
-      <div class="camera-btn">
+      <!-- Vinculamos la variable imagenPerfil -->
+      <img [src]="imagenPerfil" alt="Avatar" class="profile-img">
+      
+      <!-- Botón para activar la cámara -->
+      <div class="camera-btn" (click)="tomarFoto()">
         <ion-icon name="camera-outline"></ion-icon>
       </div>
     </div>
@@ -23,15 +26,17 @@
       </ion-card-header>
       
       <ion-card-content>
+        <!-- Nota: Estos campos suelen ser readonly si la API no permite cambiarlos aquí -->
         <ion-item fill="outline" class="ion-margin-bottom custom-input">
           <ion-label position="floating">Nombre Completo</ion-label>
-          <ion-input formControlName="nombre" type="text"></ion-input>
+          <ion-input formControlName="nombre" type="text" [readonly]="true"></ion-input>
         </ion-item>
 
         <ion-item fill="outline" class="ion-margin-bottom custom-input">
           <ion-label position="floating">Apellido Completo</ion-label>
-          <ion-input formControlName="apellido" type="text"></ion-input>
+          <ion-input formControlName="apellido" type="text" [readonly]="true"></ion-input>
         </ion-item>
+        <ion-note color="medium" style="font-size: 0.8rem;">* Nombre y apellido no editables.</ion-note>
       </ion-card-content>
     </ion-card>
 
@@ -74,8 +79,8 @@
 
       <ion-card-content>
         <ion-item fill="outline" class="custom-input ion-margin-bottom">
-          <ion-label position="floating">Dirección</ion-label>
-          <ion-input formControlName="direccion"></ion-input>
+          <ion-label position="floating">Dirección / Coordenadas</ion-label>
+          <ion-input formControlName="direccion" [readonly]="true"></ion-input>
           <ion-icon slot="end" name="location-outline" class="input-icon"></ion-icon>
         </ion-item>
 
@@ -86,6 +91,9 @@
           <ion-icon slot="start" name="location-outline" *ngIf="!loadingGeo"></ion-icon>
         </ion-button>
         <p class="geo-note">* Se activará el GPS para detectar tu zona.</p>
+
+        <!-- Contenedor del Mapa (Leaflet) -->
+        <div id="mapId" class="map-container"></div>
       </ion-card-content>
     </ion-card>
 

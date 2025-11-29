@@ -75,3 +75,14 @@ ion-content {
   text-align: center;
   font-style: italic;
 }
+
+// --- ESTILOS PARA EL MAPA (LEAFLET) ---
+.map-container {
+  width: 100%;
+  height: 250px; /* Altura obligatoria para que el mapa se vea */
+  margin-top: 15px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  z-index: 1; /* Evita superposiciones con otros elementos */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
