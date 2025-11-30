@@ -1,12 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-// Importamos tu componente de menú
+import { IonicModule, ViewWillEnter } from '@ionic/angular'; // Importamos ViewWillEnter
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
-// Importamos servicio de Base de Datos para recuperar sesión si se recarga
 import { DBTaskService } from '../../services/dbservice';
-// Importamos Iconos
 import { addIcons } from 'ionicons';
 import { locationOutline, arrowForwardOutline } from 'ionicons/icons';
 
@@ -27,9 +24,8 @@ interface OfertaTrabajo {
   standalone: true,
   imports: [CommonModule, IonicModule, HeaderMenuComponent]
 })
-export class PrincipalPage implements OnInit {
+export class PrincipalPage implements OnInit, ViewWillEnter {
 
-  // 'usuario' ahora guardará el objeto completo que viene de la BD/API
   usuario: any = null; 
   headerHidden = false;
   private lastScrollTop = 0;
@@ -59,25 +55,31 @@ export class PrincipalPage implements OnInit {
   private dbTask = inject(DBTaskService);
 
   constructor() {
-    // IMPORTANTE: Registrar los iconos usados en el HTML
     addIcons({ locationOutline, arrowForwardOutline });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    // ngOnInit solo se ejecuta una vez al crear el componente.
+    // Dejamos esto vacío o para configuraciones estáticas.
+  }
+
+  // SOLUCIÓN: Usamos ionViewWillEnter
+  // Este evento se dispara CADA VEZ que la vista se vuelve activa.
+  async ionViewWillEnter() {
     await this.cargarUsuario();
   }
 
   async cargarUsuario() {
-    // 1. Intentamos obtener datos de la navegación (si venimos del Login)
+    // 1. Intentamos obtener datos de la navegación (Login reciente)
     const navigationState = this.router.getCurrentNavigation()?.extras.state;
     
     if (navigationState && navigationState['usuario']) {
       this.usuario = navigationState['usuario'];
       console.log('Usuario cargado desde Navegación:', this.usuario);
     } else {
-      // 2. Si recargamos la página, recuperamos desde el Storage local
+      // 2. Si no hay estado de navegación (recarga o caché), forzamos lectura de BD
       this.usuario = await this.dbTask.getCurrentUser();
-      console.log('Usuario cargado desde Storage:', this.usuario);
+      console.log('Usuario cargado desde Storage (Refresh):', this.usuario);
     }
   }
 
