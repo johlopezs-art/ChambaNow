@@ -2,9 +2,10 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterModule } from '@angular/router';
-// 1. ELIMINAMOS EL IMPORT DE AuthenticationService
 import { addIcons } from 'ionicons';
 import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ionicons/icons';
+// IMPORTANTE: Importar el servicio de Base de Datos para cerrar sesión correctamente
+import { DBTaskService } from '../../services/dbservice';
 
 @Component({
   selector: 'app-header-menu',
@@ -22,13 +23,15 @@ import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ion
 
         <!-- Botón del Menú -->
         <ion-buttons slot="end">
-          <ion-button id="menu-trigger">
+          <!-- CORRECCIÓN: Usamos [id] dinámico para evitar conflictos entre páginas -->
+          <ion-button [id]="triggerId">
             <ion-icon [icon]="menuIcon"></ion-icon>
           </ion-button>
         </ion-buttons>
 
         <!-- Menú Desplegable -->
-        <ion-popover trigger="menu-trigger" dismissOnSelect="true" side="bottom" alignment="end">
+        <!-- CORRECCIÓN: El trigger debe coincidir con el ID dinámico -->
+        <ion-popover [trigger]="triggerId" dismissOnSelect="true" side="bottom" alignment="end">
           <ng-template>
             <ion-content class="ion-no-padding">
               <ion-list lines="none">
@@ -76,22 +79,25 @@ export class HeaderMenuComponent {
   @Input() title: string = 'ChambaNow';
 
   menuIcon = ellipsisVertical;
-
-  // 2. ELIMINAMOS LA INYECCIÓN DEL SERVICIO DE AUTENTICACIÓN
-  // private authService = inject(AuthenticationService);
   
+  // SOLUCIÓN AL PROBLEMA:
+  // Generamos un ID único aleatorio cada vez que se usa el componente.
+  // Si usas un ID fijo como "menu-trigger", al tener el componente en 2 páginas a la vez (historial),
+  // Ionic no sabe cuál abrir y deja de funcionar.
+  triggerId = 'menu-trigger-' + Math.random().toString(36).substring(2);
+
   private router = inject(Router);
+  // Inyectamos el servicio de BD que configuramos antes
+  private dbTask = inject(DBTaskService);
 
   constructor() {
     addIcons({ ellipsisVertical, personOutline, homeOutline, logOutOutline });
   }
 
-  logout() {
-    // 3. LÓGICA MANUAL DE LOGOUT
-    // Limpiamos cualquier rastro de usuario o token guardado
-    localStorage.clear(); 
-    // O si usas claves especificas: localStorage.removeItem('usuario');
-
+  async logout() {
+    // Usamos el método correcto para limpiar SQLite y Storage
+    await this.dbTask.closeSession();
+    
     // Redirigimos al login
     this.router.navigate(['/login']);
   }
