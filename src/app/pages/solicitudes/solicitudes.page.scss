@@ -1,0 +1,85 @@
+// Fondo suave grisáceo para resaltar las tarjetas blancas
+ion-content {
+  --background: #f4f5f8;
+}
+
+// Estilo para el título superior
+h2 {
+  color: var(--ion-color-primary);
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+p.ion-text-muted {
+  font-size: 0.95rem;
+  margin-top: 0;
+}
+
+// Estilo de la Tarjeta del Formulario
+.form-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  background: white;
+  overflow: visible; // Permite que sombras o elementos salgan si es necesario
+
+  ion-card-content {
+    padding: 20px;
+  }
+}
+
+// Estilos personalizados para los Inputs (Borde redondeado, iconos)
+.custom-input {
+  --border-radius: 10px; // Bordes más redondeados
+  --highlight-color-focused: var(--ion-color-primary);
+  --background: #fff;
+  margin-bottom: 15px; // Espacio entre inputs
+  
+  // Ajuste del Label Flotante
+  ion-label {
+    font-weight: 500;
+    color: var(--ion-color-medium);
+  }
+
+  // Ajuste del Icono a la derecha
+  .input-icon {
+    color: var(--ion-color-medium);
+    margin-right: 0;
+    font-size: 1.3rem;
+    align-self: center;
+    margin-top: 18px; // Compensación visual por el label flotante
+    opacity: 0.7;
+  }
+}
+
+// Estilo específico para el TextArea (Especificación)
+ion-textarea {
+  min-height: 100px;
+}
+
+// Mensajes de error (ion-note)
+ion-note {
+  font-size: 0.8rem;
+  display: block;
+  margin-top: -10px; // Lo pegamos un poco al input superior
+  margin-bottom: 15px;
+  padding-left: 5px;
+  font-weight: 500;
+  
+  &[color="danger"] {
+    color: var(--ion-color-danger);
+  }
+}
+
+// Botón de Guardar
+ion-button {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  --border-radius: 12px;
+  margin-top: 10px;
+  --box-shadow: 0 4px 10px rgba(var(--ion-color-primary-rgb), 0.3);
+  
+  ion-icon {
+    margin-left: 8px;
+  }
+}

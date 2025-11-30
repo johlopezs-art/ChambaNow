@@ -1,0 +1,49 @@
+ion-content {
+    --background: #f4f5f8;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--ion-color-medium);
+    margin-top: 50px;
+}
+
+.solicitud-card {
+    border-radius: 12px;
+    margin-bottom: 15px;
+    
+    ion-card-header {
+        background: #f9f9f9;
+        padding: 10px 15px;
+    }
+}
+
+.postulante-item {
+    --padding-start: 0;
+    margin-bottom: 5px;
+}
+
+.actions {
+    display: flex;
+    gap: 0;
+}
+
+.success-text {
+    color: var(--ion-color-success);
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.contact-item {
+    border: 1px solid var(--ion-color-light-shade);
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.divider {
+    height: 1px;
+    background: #eee;
+    margin: 10px 0;
+}
+
+

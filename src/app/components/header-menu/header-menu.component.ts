@@ -3,8 +3,14 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { ellipsisVertical, personOutline, homeOutline, logOutOutline } from 'ionicons/icons';
-// IMPORTANTE: Importar el servicio de Base de Datos para cerrar sesión correctamente
+import { 
+  ellipsisVertical, 
+  personOutline, 
+  homeOutline, 
+  logOutOutline, 
+  briefcaseOutline, 
+  mailUnreadOutline // Icono para la Bandeja
+} from 'ionicons/icons';
 import { DBTaskService } from '../../services/dbservice';
 
 @Component({
@@ -23,14 +29,13 @@ import { DBTaskService } from '../../services/dbservice';
 
         <!-- Botón del Menú -->
         <ion-buttons slot="end">
-          <!-- CORRECCIÓN: Usamos [id] dinámico para evitar conflictos entre páginas -->
+          <!-- ID dinámico para evitar conflictos -->
           <ion-button [id]="triggerId">
             <ion-icon [icon]="menuIcon"></ion-icon>
           </ion-button>
         </ion-buttons>
 
         <!-- Menú Desplegable -->
-        <!-- CORRECCIÓN: El trigger debe coincidir con el ID dinámico -->
         <ion-popover [trigger]="triggerId" dismissOnSelect="true" side="bottom" alignment="end">
           <ng-template>
             <ion-content class="ion-no-padding">
@@ -45,6 +50,17 @@ import { DBTaskService } from '../../services/dbservice';
                   <ion-label>Principal</ion-label>
                 </ion-item>
 
+                <ion-item button routerLink="/solicitudes" detail="false">
+                  <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+                  <ion-label>Solicitudes</ion-label>
+                </ion-item>
+
+                <!-- NUEVO: Enlace a la Bandeja -->
+                <ion-item button routerLink="/bandeja" detail="false">
+                  <ion-icon name="mail-unread-outline" slot="start"></ion-icon>
+                  <ion-label>Bandeja</ion-label>
+                </ion-item>
+
                 <ion-item button routerLink="/datos-personales" detail="false">
                   <ion-icon name="person-outline" slot="start"></ion-icon>
                   <ion-label>Mi Cuenta</ion-label>
@@ -52,7 +68,6 @@ import { DBTaskService } from '../../services/dbservice';
 
                 <div class="separator"></div>
 
-                <!-- Evento Click para Logout -->
                 <ion-item button (click)="logout()" detail="false" lines="none" class="logout-item">
                   <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
                   <ion-label color="danger">Cerrar Sesión</ion-label>
@@ -79,26 +94,25 @@ export class HeaderMenuComponent {
   @Input() title: string = 'ChambaNow';
 
   menuIcon = ellipsisVertical;
-  
-  // SOLUCIÓN AL PROBLEMA:
-  // Generamos un ID único aleatorio cada vez que se usa el componente.
-  // Si usas un ID fijo como "menu-trigger", al tener el componente en 2 páginas a la vez (historial),
-  // Ionic no sabe cuál abrir y deja de funcionar.
+  // Generamos un ID único para evitar conflictos entre páginas
   triggerId = 'menu-trigger-' + Math.random().toString(36).substring(2);
 
   private router = inject(Router);
-  // Inyectamos el servicio de BD que configuramos antes
   private dbTask = inject(DBTaskService);
 
   constructor() {
-    addIcons({ ellipsisVertical, personOutline, homeOutline, logOutOutline });
+    addIcons({ 
+      ellipsisVertical, 
+      personOutline, 
+      homeOutline, 
+      logOutOutline, 
+      briefcaseOutline,
+      mailUnreadOutline 
+    });
   }
 
   async logout() {
-    // Usamos el método correcto para limpiar SQLite y Storage
     await this.dbTask.closeSession();
-    
-    // Redirigimos al login
     this.router.navigate(['/login']);
   }
 }

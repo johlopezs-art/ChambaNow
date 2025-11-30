@@ -1,0 +1,107 @@
+<app-header-menu title="Bandeja de Entrada"></app-header-menu>
+
+<ion-content class="bg-light">
+  
+  <!-- SEGMENTO SUPERIOR (TABS) -->
+  <ion-segment [value]="segmentoSeleccionado" (ionChange)="cambiarSegmento($event)" class="ion-margin-bottom">
+    <ion-segment-button value="solicitudes">
+      <ion-label>Mis Ofertas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="postulaciones">
+      <ion-label>Mis Postulaciones</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- VISTA 1: MIS OFERTAS (Yo contrato) -->
+  <div *ngIf="segmentoSeleccionado === 'solicitudes'" class="ion-padding">
+    
+    <div *ngIf="misSolicitudes.length === 0" class="empty-state">
+      <p>No has publicado ofertas de trabajo.</p>
+    </div>
+
+    <ion-card *ngFor="let solicitud of misSolicitudes" class="solicitud-card">
+      <ion-card-header>
+        <ion-card-title>{{ solicitud.titulo }}</ion-card-title>
+        <ion-card-subtitle>Postulantes: {{ solicitud.postulantes.length }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item *ngFor="let p of solicitud.postulantes" class="postulante-item">
+            <ion-avatar slot="start">
+              <img [src]="p.foto || 'https://ionicframework.com/docs/img/demos/avatar.svg'">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{ p.nombre }}</h3>
+              <p>{{ p.profesion }}</p>
+              
+              <!-- Estado Visual -->
+              <ion-badge *ngIf="p.estado === 'aceptada'" color="success">Aceptado</ion-badge>
+              <ion-badge *ngIf="p.estado === 'rechazada'" color="medium">Rechazado</ion-badge>
+            </ion-label>
+
+            <!-- ACCIONES (Solo si está pendiente) -->
+            <div slot="end" *ngIf="p.estado === 'pendiente'" class="actions">
+              <ion-button fill="clear" color="success" (click)="gestionarPostulacion(p.postulacion_id, 'aceptada')">
+                <ion-icon name="checkmark-circle" size="large"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" (click)="gestionarPostulacion(p.postulacion_id, 'rechazada')">
+                <ion-icon name="close-circle" size="large"></ion-icon>
+              </ion-button>
+            </div>
+
+            <!-- LINK CORREO (Solo si aceptado) -->
+            <ion-button slot="end" fill="outline" size="small" *ngIf="p.estado === 'aceptada'" href="mailto:{{p.email}}">
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+              Contactar
+            </ion-button>
+
+          </ion-item>
+        </ion-list>
+        
+        <p *ngIf="solicitud.postulantes.length === 0" class="ion-text-center ion-text-muted">
+          <small>Aún nadie postula a este trabajo.</small>
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- VISTA 2: MIS POSTULACIONES (Yo busco trabajo) -->
+  <div *ngIf="segmentoSeleccionado === 'postulaciones'" class="ion-padding">
+    
+    <div *ngIf="misPostulaciones.length === 0" class="empty-state">
+      <p>No has postulado a ningún trabajo aún.</p>
+    </div>
+
+    <ion-card *ngFor="let post of misPostulaciones" class="postulacion-card">
+      <ion-item lines="none">
+        <ion-icon name="briefcase-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ post.solicitud_titulo }}</h2>
+          <p>Estado de postulación:</p>
+        </ion-label>
+        
+        <ion-badge [color]="post.estado === 'aceptada' ? 'success' : (post.estado === 'rechazada' ? 'danger' : 'warning')">
+          {{ post.estado | titlecase }}
+        </ion-badge>
+      </ion-item>
+
+      <!-- Si me aceptaron, mostrar contacto -->
+      <div *ngIf="post.estado === 'aceptada'" class="contacto-info ion-padding-horizontal ion-padding-bottom">
+        <div class="divider"></div>
+        <p class="success-text">¡Felicidades! Has sido aceptado.</p>
+        <p>Contacta al empleador:</p>
+        <ion-item lines="none" class="contact-item" href="mailto:{{post.email_contacto}}">
+          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>{{ post.nombre_contacto }}</h3>
+            <p>{{ post.email_contacto }}</p>
+          </ion-label>
+          <ion-icon name="mail-outline" slot="end" color="primary"></ion-icon>
+        </ion-item>
+      </div>
+
+    </ion-card>
+  </div>
+
+</ion-content>

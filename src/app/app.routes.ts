@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth-guard'; // 1. Importamos tu Guard
+import { AuthGuard } from './guards/auth-guard'; // Asegúrate de que el nombre del archivo sea correcto
 
 export const routes: Routes = [
-  // --- RUTAS PÚBLICAS (Cualquiera puede entrar) ---
+  // --- RUTAS PÚBLICAS ---
   {
     path: '',
     redirectTo: 'login',
@@ -19,38 +19,48 @@ export const routes: Routes = [
 
   // --- RUTAS PROTEGIDAS (Necesitan Login 🔒) ---
   {
-    path: 'home',
+    path: 'home', 
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-    canActivate: [AuthGuard] // 🔒
+    canActivate: [AuthGuard]
   },
   {
     path: 'principal',
     loadComponent: () => import('./pages/principal/principal.page').then( m => m.PrincipalPage),
-    canActivate: [AuthGuard] // 🔒
+    canActivate: [AuthGuard]
   },
   {
     path: 'datos-personales',
     loadComponent: () => import('./pages/datos-personales/datos-personales.page').then( m => m.DatosPersonalesPage),
-    canActivate: [AuthGuard] // 🔒
+    canActivate: [AuthGuard]
   },
   {
-    // Ruta con parámetro (ID)
+    // Ruta con parámetro (ID) para ver detalle de trabajo
     path: 'link-trabajo/:id',
     loadComponent: () => import('./pages/link-trabajo/link-trabajo.page').then(m => m.LinkTrabajoPage),
-    canActivate: [AuthGuard] // 🔒
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'solicitudes', 
+    loadComponent: () => import('./pages/solicitudes/solicitudes.page').then( m => m.SolicitudesPage),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'bandeja', // Nueva ruta para ver postulaciones y ofertas
+    loadComponent: () => import('./pages/bandeja/bandeja.page').then( m => m.BandejaPage),
+    canActivate: [AuthGuard]
   },
   {
     path: 'agregar',
     loadComponent: () => import('./pages/agregar/agregar.page').then( m => m.AgregarPage),
-    canActivate: [AuthGuard] // 🔒
+    canActivate: [AuthGuard]
   },
   {
     path: 'modificar',
     loadComponent: () => import('./pages/modificar/modificar.page').then( m => m.ModificarPage),
-    canActivate: [AuthGuard] // 🔒
+    canActivate: [AuthGuard]
   },
 
-  // --- MANEJO DE ERRORES (Pública) ---
+  // --- MANEJO DE ERRORES (SIEMPRE AL FINAL) ---
   {
     path: '**',
     loadComponent: () => import('./pages/error404/error404.page').then( m => m.Error404Page)

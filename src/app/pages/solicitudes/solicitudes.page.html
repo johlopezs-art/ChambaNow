@@ -1,0 +1,60 @@
+<app-header-menu title="Crear Solicitud"></app-header-menu>
+
+<ion-content class="ion-padding bg-light">
+
+  <div class="ion-text-center ion-margin-bottom">
+    <h2>Publicar Trabajo</h2>
+    <p class="ion-text-muted">Detalla lo que necesitas</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="crearSolicitud()">
+    
+    <ion-card class="form-card">
+      <ion-card-content>
+        
+        <!-- Título -->
+        <ion-item fill="outline" class="custom-input ion-margin-bottom">
+          <ion-label position="floating">Nombre del Trabajo</ion-label>
+          <ion-input formControlName="titulo" placeholder="Ej: Se busca Pintor"></ion-input>
+          <ion-icon slot="end" name="briefcase-outline" class="input-icon"></ion-icon>
+        </ion-item>
+        <ion-note color="danger" *ngIf="form.get('titulo')?.invalid && form.get('titulo')?.touched">
+          Mínimo 5 caracteres.
+        </ion-note>
+
+        <!-- Profesión -->
+        <ion-item fill="outline" class="custom-input ion-margin-bottom">
+          <ion-label position="floating">Profesión / Ocupación</ion-label>
+          <ion-input formControlName="profesion" placeholder="Ej: Pintor, Albañil"></ion-input>
+          <ion-icon slot="end" name="hammer-outline" class="input-icon"></ion-icon>
+        </ion-item>
+
+        <!-- Sueldo -->
+        <ion-item fill="outline" class="custom-input ion-margin-bottom">
+          <ion-label position="floating">Sueldo Ofrecido</ion-label>
+          <ion-input formControlName="sueldo" type="text" placeholder="$ CLP"></ion-input>
+          <ion-icon slot="end" name="cash-outline" class="input-icon"></ion-icon>
+        </ion-item>
+
+        <!-- Especificación -->
+        <ion-item fill="outline" class="custom-input ion-margin-bottom">
+          <ion-label position="floating">Especificación del Trabajo</ion-label>
+          <ion-textarea formControlName="especificacion" rows="4" placeholder="Describe los detalles..."></ion-textarea>
+          <ion-icon slot="end" name="document-text-outline" class="input-icon" style="margin-top: 10px;"></ion-icon>
+        </ion-item>
+        <ion-note color="danger" *ngIf="form.get('especificacion')?.invalid && form.get('especificacion')?.touched">
+          Mínimo 10 caracteres.
+        </ion-note>
+
+      </ion-card-content>
+    </ion-card>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" size="large" [disabled]="form.invalid">
+        Publicar Solicitud
+        <ion-icon slot="end" name="save-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+  </form>
+</ion-content>

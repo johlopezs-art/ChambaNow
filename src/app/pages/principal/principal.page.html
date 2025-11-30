@@ -5,7 +5,6 @@
 
   <!-- Mensaje de Bienvenida -->
   <div class="ion-margin-bottom">
-    <!-- Usamos el operador '?' porque usuario puede ser null al inicio -->
     <h2>¡Bienvenido/a, {{ usuario?.nombre || 'Invitado' }}! 🎉</h2>
     <p class="ion-text-muted">Aquí están las ofertas disponibles para ti.</p>
   </div>
@@ -14,13 +13,17 @@
   <ion-card class="ion-margin-bottom" color="light" *ngIf="usuario">
     <ion-card-content>
       <p><small><strong>Email:</strong> {{ usuario?.email }}</small></p>
-      <!-- Solo mostramos ID si existe -->
       <p *ngIf="usuario?.id"><small><strong>ID Usuario:</strong> {{ usuario?.id }}</small></p>
     </ion-card-content>
   </ion-card>
 
   <!-- LISTA DE OFERTAS -->
   <ion-list>
+    <!-- Mensaje si no hay ofertas -->
+    <div *ngIf="ofertas.length === 0" class="ion-text-center ion-padding">
+      <p class="ion-text-muted">No hay ofertas publicadas aún.</p>
+    </div>
+
     <ion-card
       *ngFor="let oferta of ofertas"
       (click)="verDetalle(oferta.id)"
@@ -31,13 +34,15 @@
       <ion-item lines="none">
         <ion-avatar slot="start" class="ion-margin-end">
           <img [src]="oferta.imagenUrl" 
-               alt="{{ oferta.empresa }}" 
+               alt="Icono" 
                onerror="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" />
         </ion-avatar>
 
         <ion-label>
           <h3>{{ oferta.titulo }}</h3>
-          <p>{{ oferta.empresa }}</p>
+          
+          <!-- CORRECCIÓN: Usamos 'profesion' en lugar de 'empresa' -->
+          <p>{{ oferta.profesion }}</p>
           
           <ion-note color="success" class="ion-padding-top d-block">
             <strong>{{ oferta.sueldo }}</strong>
@@ -53,7 +58,8 @@
       </ion-item>
 
       <ion-card-content>
-        <p class="ion-text-wrap">{{ oferta.resumen }}</p>
+        <!-- CORRECCIÓN: Usamos 'especificacion' en lugar de 'resumen' -->
+        <p class="ion-text-wrap">{{ oferta.especificacion }}</p>
         
         <div class="ion-text-end ion-margin-top">
           <ion-button fill="clear" size="small" (click)="verDetalle(oferta.id); $event.stopPropagation()">
@@ -66,5 +72,12 @@
   </ion-list>
   
   <div style="height: 50px;"></div>
+
+  <!-- Botón Flotante (FAB) para crear solicitud -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="irCrearSolicitud()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

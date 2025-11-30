@@ -1,20 +1,23 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { IonicModule, ViewWillEnter } from '@ionic/angular'; // Importamos ViewWillEnter
+import { IonicModule, ViewWillEnter } from '@ionic/angular'; 
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 import { DBTaskService } from '../../services/dbservice';
 import { addIcons } from 'ionicons';
-import { locationOutline, arrowForwardOutline } from 'ionicons/icons';
+import { locationOutline, arrowForwardOutline, addCircleOutline } from 'ionicons/icons';
+
+import { ApiService } from '../../services/api';
+import { lastValueFrom } from 'rxjs';
 
 interface OfertaTrabajo {
   id: number;
   titulo: string;
-  empresa: string;
-  ubicacion: string;
-  resumen: string;
-  imagenUrl: string;
+  profesion: string;
+  especificacion: string;
   sueldo: string;
+  ubicacion?: string; 
+  imagenUrl?: string;
 }
 
 @Component({
@@ -29,62 +32,60 @@ export class PrincipalPage implements OnInit, ViewWillEnter {
   usuario: any = null; 
   headerHidden = false;
   private lastScrollTop = 0;
-
-  ofertas: OfertaTrabajo[] = [
-    {
-      id: 1,
-      titulo: 'Desarrollador Frontend (Angular)',
-      empresa: 'Tech Solutions Ltda.',
-      ubicacion: 'Santiago, CL',
-      resumen: 'Desarrollo de interfaces de usuario robustas con Angular 17+ y TypeScript.',
-      imagenUrl: 'assets/icon/tech.jpg', 
-      sueldo: '$1.500.000 CLP'
-    },
-    {
-      id: 2,
-      titulo: 'Analista de Datos Jr.',
-      empresa: 'Data Insights Corp.',
-      ubicacion: 'Viña del Mar, CL',
-      resumen: 'Análisis e interpretación de grandes volúmenes de datos usando SQL y Python.',
-      imagenUrl: 'assets/icon/datainsights.png',
-      sueldo: '$950.000 CLP'
-    }
-  ];
+  ofertas: OfertaTrabajo[] = [];
 
   private router = inject(Router);
   private dbTask = inject(DBTaskService);
+  private apiService = inject(ApiService);
 
   constructor() {
-    addIcons({ locationOutline, arrowForwardOutline });
+    addIcons({ locationOutline, arrowForwardOutline, addCircleOutline });
   }
 
   ngOnInit() {
-    // ngOnInit solo se ejecuta una vez al crear el componente.
-    // Dejamos esto vacío o para configuraciones estáticas.
+    // Se deja vacío, usamos ionViewWillEnter
   }
 
-  // SOLUCIÓN: Usamos ionViewWillEnter
-  // Este evento se dispara CADA VEZ que la vista se vuelve activa.
   async ionViewWillEnter() {
     await this.cargarUsuario();
+    await this.cargarOfertas(); 
   }
 
   async cargarUsuario() {
-    // 1. Intentamos obtener datos de la navegación (Login reciente)
     const navigationState = this.router.getCurrentNavigation()?.extras.state;
     
     if (navigationState && navigationState['usuario']) {
       this.usuario = navigationState['usuario'];
-      console.log('Usuario cargado desde Navegación:', this.usuario);
     } else {
-      // 2. Si no hay estado de navegación (recarga o caché), forzamos lectura de BD
+      // Si recargamos la página, recuperamos desde la BD local
       this.usuario = await this.dbTask.getCurrentUser();
-      console.log('Usuario cargado desde Storage (Refresh):', this.usuario);
+    }
+  }
+
+  async cargarOfertas() {
+    try {
+      const data = await lastValueFrom(this.apiService.obtenerSolicitudes());
+      // Mapeamos los datos de la API a nuestra interfaz local
+      this.ofertas = data.map((item: any) => ({
+        id: item.id,
+        titulo: item.titulo,
+        profesion: item.profesion,
+        especificacion: item.especificacion,
+        sueldo: item.sueldo,
+        ubicacion: 'Chile', // Valor por defecto
+        imagenUrl: '' // Imagen por defecto
+      }));
+    } catch (error) {
+      console.error('Error cargando ofertas', error);
     }
   }
 
   verDetalle(trabajoId: number) {
     this.router.navigate(['/link-trabajo', trabajoId]);
+  }
+
+  irCrearSolicitud() {
+    this.router.navigate(['/solicitudes']);
   }
 
   onScroll(event: any) {
