@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 // Importaciones explícitas de componentes Ionic Standalone
 import { 
   IonHeader, 
@@ -36,6 +36,7 @@ import { DBTaskService } from '../../services/dbservice';
   // Importamos explícitamente todos los componentes usados en el HTML
   imports: [
     CommonModule, 
+    RouterModule, // Importamos RouterModule por si acaso, aunque usamos navegación programática
     IonHeader, 
     IonToolbar, 
     IonButtons, 
@@ -50,15 +51,15 @@ import { DBTaskService } from '../../services/dbservice';
     IonLabel, 
     IonItem
   ],
-  templateUrl: './header-menu.component.html', // Recomendado: mover el HTML a su propio archivo también, pero si prefieres inline, quita esta línea y deja el template: `...`
-  // CAMBIO AQUÍ: Usamos styleUrls en lugar de styles inline
-  styleUrls: ['./header-menu.component.scss'] 
+  // Referenciamos a los archivos externos HTML y SCSS
+  templateUrl: './header-menu.component.html',
+  styleUrls: ['./header-menu.component.scss']
 })
 export class HeaderMenuComponent {
   @Input() title: string = 'ChambaNow';
 
   menuIcon = ellipsisVertical;
-  // ID único para el trigger
+  // ID único para el trigger, evita conflictos si hay múltiples instancias
   triggerId = 'menu-trigger-' + Math.random().toString(36).substring(2);
 
   private router = inject(Router);
@@ -77,11 +78,13 @@ export class HeaderMenuComponent {
     });
   }
 
+  // Navega a una ruta y cierra el menú
   async navegar(ruta: string) {
     await this.popoverCtrl.dismiss();
     this.router.navigate([ruta]);
   }
 
+  // Cierra sesión, cierra el menú y navega al login limpiando el historial
   async logout() {
     await this.popoverCtrl.dismiss();
     await this.dbTask.closeSession();

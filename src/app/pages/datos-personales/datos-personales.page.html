@@ -5,7 +5,6 @@
   <!-- SECCIÓN DE FOTO DE PERFIL -->
   <div class="avatar-section ion-text-center ion-margin-bottom">
     <div class="avatar-wrapper">
-      <!-- Vinculamos la variable imagenPerfil -->
       <img [src]="imagenPerfil" alt="Avatar" class="profile-img">
       
       <!-- Botón para activar la cámara -->
@@ -26,15 +25,30 @@
       </ion-card-header>
       
       <ion-card-content>
-        <!-- Nota: Estos campos suelen ser readonly si la API no permite cambiarlos aquí -->
+        <!-- Nombre Completo -->
         <ion-item fill="outline" class="ion-margin-bottom custom-input">
-          <ion-label position="floating">Nombre Completo</ion-label>
-          <ion-input formControlName="nombre" type="text" [readonly]="true"></ion-input>
+          <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+          <ion-input 
+            label="Nombre Completo" 
+            labelPlacement="floating"
+            formControlName="nombre" 
+            type="text" 
+            [readonly]="true"
+            mode="md">
+          </ion-input>
         </ion-item>
 
+        <!-- Apellido Completo -->
         <ion-item fill="outline" class="ion-margin-bottom custom-input">
-          <ion-label position="floating">Apellido Completo</ion-label>
-          <ion-input formControlName="apellido" type="text" [readonly]="true"></ion-input>
+          <ion-icon slot="start" name="person-outline" color="primary"></ion-icon>
+          <ion-input 
+            label="Apellido Completo" 
+            labelPlacement="floating"
+            formControlName="apellido" 
+            type="text" 
+            [readonly]="true"
+            mode="md">
+          </ion-input>
         </ion-item>
         <ion-note color="medium" style="font-size: 0.8rem;">* Nombre y apellido no editables.</ion-note>
       </ion-card-content>
@@ -48,25 +62,43 @@
 
       <ion-card-content>
         <ion-row>
-          <ion-col size="6">
-            <ion-item fill="outline" class="custom-input">
-              <ion-label position="floating">Ocupación</ion-label>
-              <ion-input formControlName="ocupacion" placeholder="Ej: Freelancer"></ion-input>
-              <ion-icon slot="end" name="briefcase-outline" class="input-icon"></ion-icon>
+          <ion-col size="12" size-md="6">
+            <ion-item fill="outline" class="custom-input ion-margin-bottom">
+              <ion-icon slot="start" name="briefcase-outline" color="primary"></ion-icon>
+              <ion-input 
+                label="Ocupación" 
+                labelPlacement="floating"
+                formControlName="ocupacion" 
+                placeholder="Ej: Freelancer"
+                mode="md">
+              </ion-input>
             </ion-item>
           </ion-col>
-          <ion-col size="6">
-            <ion-item fill="outline" class="custom-input">
-              <ion-label position="floating">Profesión</ion-label>
-              <ion-input formControlName="profesion" placeholder="Ej: Ingeniero"></ion-input>
-              <ion-icon slot="end" name="hammer-outline" class="input-icon"></ion-icon>
+          
+          <ion-col size="12" size-md="6">
+            <ion-item fill="outline" class="custom-input ion-margin-bottom">
+              <ion-icon slot="start" name="hammer-outline" color="primary"></ion-icon>
+              <ion-input 
+                label="Profesión" 
+                labelPlacement="floating"
+                formControlName="profesion" 
+                placeholder="Ej: Ingeniero"
+                mode="md">
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
 
         <ion-item fill="outline" class="ion-margin-top custom-input">
-          <ion-label position="floating">Habilidades (separadas por coma)</ion-label>
-          <ion-textarea formControlName="habilidades" rows="3" placeholder="Ej: Angular, Cocina, Excel..."></ion-textarea>
+          <ion-icon slot="start" name="save-outline" color="primary"></ion-icon>
+          <ion-textarea 
+            label="Habilidades (separadas por coma)" 
+            labelPlacement="floating"
+            formControlName="habilidades" 
+            rows="3" 
+            placeholder="Ej: Angular, Cocina, Excel..."
+            mode="md">
+          </ion-textarea>
         </ion-item>
       </ion-card-content>
     </ion-card>
@@ -79,13 +111,18 @@
 
       <ion-card-content>
         <ion-item fill="outline" class="custom-input ion-margin-bottom">
-          <ion-label position="floating">Dirección / Coordenadas</ion-label>
-          <ion-input formControlName="direccion" [readonly]="true"></ion-input>
-          <ion-icon slot="end" name="location-outline" class="input-icon"></ion-icon>
+          <ion-icon slot="start" name="location-outline" color="primary"></ion-icon>
+          <ion-input 
+            label="Dirección / Coordenadas" 
+            labelPlacement="floating"
+            formControlName="direccion" 
+            [readonly]="true"
+            mode="md">
+          </ion-input>
         </ion-item>
 
         <!-- Botón de Geolocalización -->
-        <ion-button expand="block" fill="outline" (click)="obtenerUbicacion()" [disabled]="loadingGeo">
+        <ion-button expand="block" fill="outline" (click)="obtenerUbicacion()" [disabled]="loadingGeo" class="ion-margin-top">
           <ion-spinner name="crescent" *ngIf="loadingGeo"></ion-spinner>
           <span *ngIf="!loadingGeo">Detectar mi ubicación actual</span>
           <ion-icon slot="start" name="location-outline" *ngIf="!loadingGeo"></ion-icon>
@@ -99,7 +136,7 @@
 
     <!-- BOTÓN GUARDAR -->
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" size="large" [disabled]="profileForm.invalid">
+      <ion-button expand="block" type="submit" size="large" [disabled]="profileForm.invalid" shape="round">
         Guardar Cambios
         <ion-icon slot="end" name="save-outline"></ion-icon>
       </ion-button>

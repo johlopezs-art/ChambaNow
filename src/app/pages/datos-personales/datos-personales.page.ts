@@ -1,10 +1,37 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicModule, ToastController, LoadingController } from '@ionic/angular';
+// Importaciones explícitas de TODOS los componentes de Ionic usados en el HTML
+import { 
+  IonContent, 
+  IonAvatar, 
+  IonIcon, 
+  IonItem, 
+  IonInput, 
+  IonLabel, 
+  IonTextarea, 
+  IonButton, 
+  IonCard,           // Faltaba este
+  IonCardHeader,     // Faltaba este
+  IonCardSubtitle,   // Faltaba este
+  IonCardContent,    // Faltaba este
+  IonRow,            // Faltaba este
+  IonCol,            // Faltaba este
+  IonNote,           // Faltaba este
+  IonSpinner,        // Faltaba este
+  ToastController, 
+  LoadingController 
+} from '@ionic/angular/standalone';
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 import { addIcons } from 'ionicons';
-import { locationOutline, saveOutline, cameraOutline, briefcaseOutline, hammerOutline } from 'ionicons/icons';
+import { 
+  locationOutline, 
+  saveOutline, 
+  cameraOutline, 
+  briefcaseOutline, 
+  hammerOutline,
+  personOutline 
+} from 'ionicons/icons';
 
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -20,7 +47,28 @@ import * as L from 'leaflet';
   templateUrl: './datos-personales.page.html',
   styleUrls: ['./datos-personales.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, HeaderMenuComponent]
+  // Agregamos todos los componentes importados al array de imports del componente
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    HeaderMenuComponent,
+    IonContent,
+    IonAvatar,
+    IonIcon,
+    IonItem,
+    IonInput,
+    IonLabel,
+    IonTextarea,
+    IonButton,
+    IonCard,           // Agregado
+    IonCardHeader,     // Agregado
+    IonCardSubtitle,   // Agregado
+    IonCardContent,    // Agregado
+    IonRow,            // Agregado
+    IonCol,            // Agregado
+    IonNote,           // Agregado
+    IonSpinner         // Agregado
+  ]
 })
 export class DatosPersonalesPage implements OnInit {
 
@@ -40,7 +88,7 @@ export class DatosPersonalesPage implements OnInit {
   private dbTask = inject(DBTaskService);
 
   constructor() {
-    addIcons({ locationOutline, saveOutline, cameraOutline, briefcaseOutline, hammerOutline });
+    addIcons({ locationOutline, saveOutline, cameraOutline, briefcaseOutline, hammerOutline, personOutline });
 
     this.profileForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -55,7 +103,7 @@ export class DatosPersonalesPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.fixLeafletMarker(); // Arreglo visual de iconos
+    this.fixLeafletMarker(); 
 
     const usuarioLogueado = await this.dbTask.getCurrentUser();
     
@@ -67,9 +115,7 @@ export class DatosPersonalesPage implements OnInit {
     }
   }
 
-  // --- ARREGLO DE ICONOS DE LEAFLET ---
   fixLeafletMarker() {
-    // CORRECCIÓN: Usamos imágenes desde un CDN público para evitar errores 404 locales
     const iconRetinaUrl = 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png';
     const iconUrl = 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png';
     const shadowUrl = 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png';
@@ -112,7 +158,6 @@ export class DatosPersonalesPage implements OnInit {
           this.cargarMapa(usuario.latitud, usuario.longitud);
         }, 500);
       } else {
-        // Si no tiene ubicación, cargamos mapa por defecto (ej: Santiago)
          setTimeout(() => {
           this.cargarMapa(-33.4489, -70.6693);
         }, 500);
@@ -126,25 +171,23 @@ export class DatosPersonalesPage implements OnInit {
     }
   }
 
-  // --- LÓGICA DE MAPA INTERACTIVO ---
   cargarMapa(lat: number, lng: number) {
     const mapContainer = document.getElementById('mapId');
     if (!mapContainer) return;
 
-    if (!this.map) {
-      // 1. Crear mapa
-      this.map = L.map('mapId').setView([lat, lng], 13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(this.map);
-
-      // 2. Evento: Click en cualquier parte del mapa
-      this.map.on('click', (e: L.LeafletMouseEvent) => {
-        this.actualizarPosicion(e.latlng.lat, e.latlng.lng);
-      });
-    } else {
-      this.map.setView([lat, lng], 13);
+    if (this.map) {
+      this.map.remove();
+      this.map = undefined;
     }
+
+    this.map = L.map('mapId').setView([lat, lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
+
+    this.map.on('click', (e: L.LeafletMouseEvent) => {
+      this.actualizarPosicion(e.latlng.lat, e.latlng.lng);
+    });
 
     this.actualizarMarcador(lat, lng);
   }
@@ -153,10 +196,8 @@ export class DatosPersonalesPage implements OnInit {
     if (this.marker) {
       this.marker.setLatLng([lat, lng]);
     } else {
-      // 3. Crear marcador ARRISTRABLE (Draggable)
       this.marker = L.marker([lat, lng], { draggable: true }).addTo(this.map!);
       
-      // 4. Evento: Al terminar de arrastrar
       this.marker.on('dragend', () => {
         const position = this.marker!.getLatLng();
         this.actualizarFormulario(position.lat, position.lng);
@@ -169,7 +210,6 @@ export class DatosPersonalesPage implements OnInit {
     this.actualizarFormulario(lat, lng);
   }
 
-  // Actualiza los valores ocultos del formulario para enviarlos a la API
   actualizarFormulario(lat: number, lng: number) {
     this.profileForm.patchValue({
       latitud: lat,
@@ -178,20 +218,40 @@ export class DatosPersonalesPage implements OnInit {
     });
   }
 
-  // --- GEOLOCALIZACIÓN GPS ---
   async obtenerUbicacion() {
     this.loadingGeo = true;
     try {
-      const coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+      const permissionStatus = await Geolocation.checkPermissions();
+      if (permissionStatus.location !== 'granted') {
+        const requestStatus = await Geolocation.requestPermissions();
+        if (requestStatus.location !== 'granted') {
+          this.mostrarToast('Permiso de ubicación denegado', 'warning');
+          this.loadingGeo = false;
+          return;
+        }
+      }
+
+      const coordinates = await Geolocation.getCurrentPosition({ 
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 3000
+      });
+
       const lat = coordinates.coords.latitude;
       const lng = coordinates.coords.longitude;
 
       this.actualizarPosicion(lat, lng);
-      this.map?.setView([lat, lng], 15);
       
+      if (this.map) {
+        this.map.setView([lat, lng], 15);
+      } else {
+        this.cargarMapa(lat, lng);
+      }
       this.mostrarToast('📍 Ubicación GPS detectada', 'primary');
+
     } catch (error) {
-      this.mostrarToast('Error al obtener GPS', 'warning');
+      console.error('Error GPS:', error);
+      this.mostrarToast('Error al obtener GPS. Activa la ubicación.', 'warning');
     } finally {
       this.loadingGeo = false;
     }
@@ -222,8 +282,8 @@ export class DatosPersonalesPage implements OnInit {
           ocupacion: formValues.ocupacion,
           profesion: formValues.profesion,
           habilidades: formValues.habilidades,
-          latitud: formValues.latitud,   // <--- AQUÍ SE ENVÍA LO DEL MAPA
-          longitud: formValues.longitud  // <--- AQUÍ SE ENVÍA LO DEL MAPA
+          latitud: formValues.latitud,
+          longitud: formValues.longitud
         };
         
         await lastValueFrom(this.apiService.actualizarPerfil(this.usuarioId, datosParaEnviar));
@@ -236,6 +296,7 @@ export class DatosPersonalesPage implements OnInit {
       }
     } else {
       this.profileForm.markAllAsTouched();
+      this.mostrarToast('Complete los campos obligatorios', 'warning');
     }
   }
 
