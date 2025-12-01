@@ -23,7 +23,8 @@
         label="Nombre" 
         labelPlacement="floating" 
         formControlName="nombre" 
-        placeholder="Tu nombre">
+        placeholder="Tu nombre"
+        mode="md">
       </ion-input>
     </ion-item>
     <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('nombre')?.touched && form.get('nombre')?.invalid">
@@ -37,7 +38,8 @@
         label="Apellido" 
         labelPlacement="floating" 
         formControlName="apellido" 
-        placeholder="Tu apellido">
+        placeholder="Tu apellido"
+        mode="md">
       </ion-input>
     </ion-item>
     <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('apellido')?.touched && form.get('apellido')?.invalid">
@@ -52,7 +54,8 @@
         labelPlacement="floating" 
         formControlName="email" 
         type="email" 
-        placeholder="ejemplo@correo.com">
+        placeholder="ejemplo@correo.com"
+        mode="md">
       </ion-input>
     </ion-item>
     <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
@@ -66,7 +69,8 @@
         label="Contraseña" 
         labelPlacement="floating" 
         formControlName="password" 
-        type="password">
+        type="password"
+        mode="md">
       </ion-input>
     </ion-item>
     <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
@@ -80,7 +84,8 @@
         label="Confirmar Contraseña" 
         labelPlacement="floating" 
         formControlName="confirmarPassword" 
-        type="password">
+        type="password"
+        mode="md">
       </ion-input>
     </ion-item>
     
@@ -97,4 +102,14 @@
     </div>
 
   </form>
+
+  <!-- NUEVO BOTÓN: VOLVER AL LOGIN (Actualizado a (click)) -->
+  <ion-row class="ion-margin-top">
+    <ion-col class="ion-text-center">
+      <ion-button fill="clear" size="small" color="medium" (click)="irALogin()">
+        ¿Ya tienes una cuenta? Inicia Sesión
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
 </ion-content>

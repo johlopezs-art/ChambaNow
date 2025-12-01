@@ -9,7 +9,7 @@ export class ApiService {
   private http = inject(HttpClient);
   
   // Asegúrate de que esta sea tu IP correcta y puerto 8000
-  private apiUrl = 'http://192.168.1.23:8000'; 
+  private apiUrl = 'http://192.168.1.111:8000'; 
 
   constructor() { }
 

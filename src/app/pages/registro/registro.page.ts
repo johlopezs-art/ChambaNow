@@ -8,15 +8,30 @@ import {
   ValidationErrors, 
   ValidatorFn 
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { Router, RouterModule } from '@angular/router';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonToolbar, 
+  IonButtons,
+  IonBackButton,
+  IonTitle, 
+  IonItem, 
+  IonInput, 
+  IonIcon, 
+  IonButton, 
+  IonNote, 
+  IonRow, 
+  IonCol,
+  ToastController 
+} from '@ionic/angular/standalone'; // Importamos componentes standalone de Ionic
 import { CommonModule } from '@angular/common';
 
 // Importamos el servicio de API y RXJS
 import { ApiService } from '../../services/api';
 import { lastValueFrom } from 'rxjs';
 
-// Importamos Iconos para usarlos en la vista (opcional pero recomendado)
+// Importamos Iconos para usarlos en la vista
 import { addIcons } from 'ionicons';
 import { personOutline, mailOutline, lockClosedOutline, createOutline } from 'ionicons/icons';
 
@@ -40,7 +55,25 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
   templateUrl: './registro.page.html',
   styleUrls: ['./registro.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule]
+  // IMPORTANTE: Importamos cada componente de Ionic usado en el HTML
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    RouterModule, // Necesario si usas routerLink en el HTML también
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonItem,
+    IonInput,
+    IonIcon,
+    IonButton,
+    IonNote,
+    IonRow,
+    IonCol
+  ]
 })
 export class RegistroPage {
 
@@ -120,5 +153,10 @@ export class RegistroPage {
       });
       await t.present();
     }
+  }
+
+  // Nuevo método para navegar al Login
+  irALogin() {
+    this.router.navigate(['/login']);
   }
 }

@@ -1,7 +1,20 @@
 import { Component, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonToolbar, 
+  IonTitle, 
+  IonItem, 
+  IonInput, 
+  IonIcon, 
+  IonButton, 
+  IonNote, 
+  IonRow, 
+  IonCol,
+  ToastController 
+} from '@ionic/angular/standalone'; // Importamos componentes standalone de Ionic
 import { CommonModule } from '@angular/common';
 import { LoaderOverlayComponent } from 'src/app/shared/loader-overlay/loader-overlay.component';
 import { addIcons } from 'ionicons';
@@ -15,7 +28,23 @@ import { DBTaskService } from '../../services/dbservice';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule, LoaderOverlayComponent],
+  // IMPORTANTE: Importamos cada componente de Ionic usado en el HTML
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    LoaderOverlayComponent,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonItem,
+    IonInput,
+    IonIcon,
+    IonButton,
+    IonNote,
+    IonRow,
+    IonCol
+  ],
 })
 export class LoginPage {
   @ViewChild('loader') loader?: LoaderOverlayComponent;
@@ -79,9 +108,10 @@ export class LoginPage {
         position: 'bottom'
       });
       await toast.present();
-    } 
-    // Nota: El loader se ocultará automáticamente si usaste showFor,
-    // o puedes llamar a this.loader?.hide() en un bloque finally si tu componente lo soporta.
+    } finally {
+       // Ocultar loader si la petición termina antes del tiempo
+       this.loader?.hide();
+    }
   }
 
   irARegistro() {

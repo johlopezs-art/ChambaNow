@@ -7,46 +7,41 @@
 <ion-content class="ion-padding">
   
   <div class="ion-text-center ion-margin-bottom">
-    <!-- Asegúrate de tener la imagen en assets/icon/logo.png -->
     <img src="assets/icon/logo.png" alt="ChambaNow Logo" class="login-logo" style="max-height: 150px; margin-top: 20px;" />
   </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
   
-    <!-- CAMPO EMAIL (Antes Usuario) -->
-    <ion-item lines="full">
+    <ion-item fill="outline" class="ion-margin-bottom">
       <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
       <ion-input 
         label="Correo Electrónico" 
         labelPlacement="floating"
         formControlName="email" 
         type="email"
-        placeholder="ejemplo@correo.com">
-      </ion-input>
+        placeholder="ejemplo@correo.com"
+        mode="md"> </ion-input>
     </ion-item>
     
-    <!-- Mensajes de error para Email -->
     <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
       <span *ngIf="form.get('email')?.errors?.['required']">El correo es obligatorio.</span>
       <span *ngIf="form.get('email')?.errors?.['email']">Formato de correo inválido.</span>
     </ion-note>
 
-    <!-- CAMPO PASSWORD -->
-    <ion-item lines="full" class="ion-margin-top">
+    <ion-item fill="outline" class="ion-margin-top">
       <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
       <ion-input
         label="Contraseña"
         labelPlacement="floating"
         formControlName="password"
         type="password"
-      ></ion-input>
+        mode="md" > </ion-input>
     </ion-item>
 
     <ion-note color="danger" class="ion-margin-start" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
       La contraseña es obligatoria (mín. 5 caracteres).
     </ion-note>
 
-    <!-- BOTÓN INICIAR SESIÓN -->
     <ion-button type="submit" expand="block" class="ion-margin-top" [disabled]="form.invalid" shape="round">
       <ion-icon slot="start" name="log-in-outline"></ion-icon>
       Iniciar Sesión
@@ -54,7 +49,6 @@
 
   </form>
 
-  <!-- BOTÓN REGISTRO -->
   <ion-row class="ion-margin-top">
     <ion-col class="ion-text-center">
       <ion-button fill="clear" size="small" color="medium" (click)="irARegistro()">
@@ -63,7 +57,6 @@
     </ion-col>
   </ion-row>
 
-  <!-- LOADER -->
   <app-loader-overlay #loader></app-loader-overlay>
 
 </ion-content>

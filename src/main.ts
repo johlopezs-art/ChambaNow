@@ -19,11 +19,16 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+    
+    // CORRECCIÓN CLAVE: Forzamos el modo 'md' para solucionar problemas de renderizado e interacción en Android.
+    provideIonicAngular({ mode: 'md' }), 
+
     provideRouter(routes),
     provideHttpClient(),
+    
     // 2. PROVEEDOR DE SQLITE
     SQLite,
+    
     // 3. INICIALIZAR IONIC STORAGE
     importProvidersFrom(
       IonicStorageModule.forRoot({

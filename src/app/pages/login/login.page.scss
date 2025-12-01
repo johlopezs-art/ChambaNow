@@ -1,124 +1,57 @@
+// Estilos para login.page.scss
+// ----------------------------------------------------
 
-$chambanow-orange: #ff7a00;
-$chambanow-gray: #555;
-$chambanow-bg: #ffffff;
-
-
-ion-header,
-ion-toolbar {
-  display: none !important;
+ion-content {
+  // Opcional: Asegura que el contenido tenga un fondo claro o el color que desees
+  --background: var(--ion-color-light); 
 }
 
-
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: $chambanow-bg;
-  padding: 20px;
-}
-
-
-.logo {
-  width: 160px;
-  margin-bottom: 40px;
-  animation: fadeIn 1s ease-in-out;
-}
-
-
-.login-card {
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 40px 30px;
-  width: 100%;
-  max-width: 340px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  animation: fadeInUp 0.8s ease;
-}
-
-
-ion-item {
+ion-header {
+  // Asegura que el header sea transparente o se mezcle con el contenido
   --background: transparent;
-  --highlight-color-focused: $chambanow-orange;
-  --color: $chambanow-gray;
-  font-size: 15px;
-  margin-bottom: 8px;
-  --min-height: 58px; 
-
-  ion-label {
-    color: $chambanow-gray;
-    font-size: 14px;
-    transform: translateY(3px); 
-  }
-
-  ion-input {
-    font-size: 16px;
-    padding-top: 6px; 
+  ion-toolbar {
+    --background: transparent;
   }
 }
 
-
-ion-note {
-  font-size: 12px;
-  margin-left: 16px;
-  color: #e74c3c;
-}
-
-
-.login-button {
-  --background: $chambanow-orange;
-  --background-hover: #e96e00;
-  --border-radius: 10px;
-  --box-shadow: 0 4px 10px rgba(255, 122, 0, 0.4);
-  color: white;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-top: 10px;
-  height: 45px;
-}
-
-
-.register-text {
+// Estilo del logo
+.login-logo {
+  max-width: 150px; // Limita el tamaño del logo
   margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+// Estilos para los campos de formulario
+ion-item {
+  // Si usas fill="outline" en el HTML, esto define el aspecto del borde.
+  // Es mejor dejar que los temas de Ionic manejen esto o definir solo lo necesario.
+  --background: #ffffff; // Fondo blanco para el item
+  
+  // Estilos de INPUT: LA CORRECCIÓN CLAVE PARA VISIBILIDAD
+  ion-input {
+    // FIX: Forzamos el color del texto introducido a negro para que sea visible
+    --color: #000000 !important; 
+    
+    // FIX: Aseguramos la visibilidad del texto placeholder (gris oscuro)
+    --placeholder-color: #555555; 
+    --placeholder-opacity: 0.8;
+  }
+  
+  // Estilos para el Label flotante
+  ion-label {
+    // Opcional: define un color para la etiqueta flotante (ej: gris más claro)
+    --color: #999999; 
+  }
+}
+
+// Estilos para el botón de Iniciar Sesión
+ion-button[type="submit"] {
+  height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+// Estilos para el botón de Registro
+ion-button[fill="clear"] {
   font-size: 14px;
-  color: $chambanow-gray;
-  text-align: center;
-
-  a {
-    color: $chambanow-orange;
-    text-decoration: none;
-    font-weight: 600;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
