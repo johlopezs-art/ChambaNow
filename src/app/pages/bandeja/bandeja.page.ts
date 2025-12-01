@@ -1,11 +1,37 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ViewWillEnter, ToastController } from '@ionic/angular';
+// Importamos TODOS los componentes de Ionic usados en el HTML
+import { 
+  IonContent, 
+  IonSegment, 
+  IonSegmentButton, 
+  IonLabel, 
+  IonCard, 
+  IonCardHeader, 
+  IonCardTitle, 
+  IonCardSubtitle, 
+  IonCardContent, 
+  IonList, 
+  IonItem, 
+  IonAvatar, 
+  IonBadge, 
+  IonButton, 
+  IonIcon, 
+  ViewWillEnter, 
+  ToastController 
+} from '@ionic/angular/standalone';
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 import { DBTaskService } from '../../services/dbservice';
 import { ApiService } from '../../services/api';
 import { addIcons } from 'ionicons';
-import { checkmarkCircle, closeCircle, timeOutline, mailOutline, personCircleOutline } from 'ionicons/icons';
+import { 
+  checkmarkCircle, 
+  closeCircle, 
+  timeOutline, 
+  mailOutline, 
+  personCircleOutline,
+  briefcaseOutline // Faltaba importar este icono usado en el HTML
+} from 'ionicons/icons';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -13,7 +39,26 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './bandeja.page.html',
   styleUrls: ['./bandeja.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, HeaderMenuComponent]
+  // IMPORTANTE: Agregamos todos los componentes al array de imports
+  imports: [
+    CommonModule, 
+    HeaderMenuComponent,
+    IonContent, 
+    IonSegment, 
+    IonSegmentButton, 
+    IonLabel, 
+    IonCard, 
+    IonCardHeader, 
+    IonCardTitle, 
+    IonCardSubtitle, 
+    IonCardContent, 
+    IonList, 
+    IonItem, 
+    IonAvatar, 
+    IonBadge, 
+    IonButton, 
+    IonIcon
+  ]
 })
 export class BandejaPage implements ViewWillEnter {
 
@@ -29,7 +74,14 @@ export class BandejaPage implements ViewWillEnter {
   private toastCtrl = inject(ToastController);
 
   constructor() {
-    addIcons({ checkmarkCircle, closeCircle, timeOutline, mailOutline, personCircleOutline });
+    addIcons({ 
+      checkmarkCircle, 
+      closeCircle, 
+      timeOutline, 
+      mailOutline, 
+      personCircleOutline,
+      briefcaseOutline 
+    });
   }
 
   async ionViewWillEnter() {

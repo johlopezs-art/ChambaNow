@@ -1,49 +1,67 @@
 ion-content {
-    --background: #f4f5f8;
+  --background: #f4f5f8;
+}
+
+// Fix para asegurar legibilidad en Android
+ion-item {
+  --background: #ffffff;
+  --color: #000000; // Asegura texto negro en items
+  
+  ion-label {
+    color: #000000 !important;
+    
+    p {
+      color: #666666 !important; // Subtítulos en gris oscuro
+    }
+  }
 }
 
 .empty-state {
-    text-align: center;
-    color: var(--ion-color-medium);
-    margin-top: 50px;
+  text-align: center;
+  color: var(--ion-color-medium);
+  margin-top: 50px;
 }
 
 .solicitud-card {
-    border-radius: 12px;
-    margin-bottom: 15px;
-    
-    ion-card-header {
-        background: #f9f9f9;
-        padding: 10px 15px;
-    }
+  border-radius: 12px;
+  margin-bottom: 15px;
+  
+  ion-card-header {
+    background: #f9f9f9;
+    padding: 10px 15px;
+  }
+  
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #000;
+  }
 }
 
 .postulante-item {
-    --padding-start: 0;
-    margin-bottom: 5px;
+  --padding-start: 0;
+  margin-bottom: 5px;
 }
 
 .actions {
-    display: flex;
-    gap: 0;
+  display: flex;
+  gap: 0;
 }
 
 .success-text {
-    color: var(--ion-color-success);
-    font-weight: bold;
-    margin-top: 10px;
+  color: var(--ion-color-success);
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .contact-item {
-    border: 1px solid var(--ion-color-light-shade);
-    border-radius: 8px;
-    margin-top: 5px;
+  border: 1px solid var(--ion-color-light-shade);
+  border-radius: 8px;
+  margin-top: 5px;
 }
 
 .divider {
-    height: 1px;
-    background: #eee;
-    margin: 10px 0;
+  height: 1px;
+  background: #eee;
+  margin: 10px 0;
 }
-
-

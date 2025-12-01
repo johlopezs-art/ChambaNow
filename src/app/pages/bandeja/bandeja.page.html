@@ -3,7 +3,7 @@
 <ion-content class="bg-light">
   
   <!-- SEGMENTO SUPERIOR (TABS) -->
-  <ion-segment [value]="segmentoSeleccionado" (ionChange)="cambiarSegmento($event)" class="ion-margin-bottom">
+  <ion-segment [value]="segmentoSeleccionado" (ionChange)="cambiarSegmento($event)" class="ion-margin-bottom" mode="md">
     <ion-segment-button value="solicitudes">
       <ion-label>Mis Ofertas</ion-label>
     </ion-segment-button>
@@ -29,7 +29,7 @@
         <ion-list lines="none">
           <ion-item *ngFor="let p of solicitud.postulantes" class="postulante-item">
             <ion-avatar slot="start">
-              <img [src]="p.foto || 'https://ionicframework.com/docs/img/demos/avatar.svg'">
+              <img [src]="p.foto || 'https://ionicframework.com/docs/img/demos/avatar.svg'" alt="Avatar">
             </ion-avatar>
             <ion-label>
               <h3>{{ p.nombre }}</h3>
@@ -43,15 +43,15 @@
             <!-- ACCIONES (Solo si está pendiente) -->
             <div slot="end" *ngIf="p.estado === 'pendiente'" class="actions">
               <ion-button fill="clear" color="success" (click)="gestionarPostulacion(p.postulacion_id, 'aceptada')">
-                <ion-icon name="checkmark-circle" size="large"></ion-icon>
+                <ion-icon name="checkmark-circle" slot="icon-only" size="large"></ion-icon>
               </ion-button>
               <ion-button fill="clear" color="danger" (click)="gestionarPostulacion(p.postulacion_id, 'rechazada')">
-                <ion-icon name="close-circle" size="large"></ion-icon>
+                <ion-icon name="close-circle" slot="icon-only" size="large"></ion-icon>
               </ion-button>
             </div>
 
             <!-- LINK CORREO (Solo si aceptado) -->
-            <ion-button slot="end" fill="outline" size="small" *ngIf="p.estado === 'aceptada'" href="mailto:{{p.email}}">
+            <ion-button slot="end" fill="outline" size="small" *ngIf="p.estado === 'aceptada'" [href]="'mailto:' + p.email">
               <ion-icon name="mail-outline" slot="start"></ion-icon>
               Contactar
             </ion-button>
@@ -91,7 +91,7 @@
         <div class="divider"></div>
         <p class="success-text">¡Felicidades! Has sido aceptado.</p>
         <p>Contacta al empleador:</p>
-        <ion-item lines="none" class="contact-item" href="mailto:{{post.email_contacto}}">
+        <ion-item lines="none" class="contact-item" [href]="'mailto:' + post.email_contacto">
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>{{ post.nombre_contacto }}</h3>
