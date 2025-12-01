@@ -1,7 +1,22 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { IonicModule, ViewWillEnter } from '@ionic/angular'; 
+import { 
+  IonContent, 
+  IonCard, 
+  IonCardContent, 
+  IonList, 
+  IonItem, 
+  IonAvatar, 
+  IonLabel, 
+  IonNote, 
+  IonIcon, 
+  IonButton, 
+  IonRippleEffect, 
+  IonFab, 
+  IonFabButton,
+  ViewWillEnter // Importamos la interfaz desde standalone para consistencia
+} from '@ionic/angular/standalone'; 
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 import { DBTaskService } from '../../services/dbservice';
 import { addIcons } from 'ionicons';
@@ -25,7 +40,24 @@ interface OfertaTrabajo {
   templateUrl: './principal.page.html',
   styleUrls: ['./principal.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, HeaderMenuComponent]
+  // IMPORTANTE: Añadimos aquí todos los componentes de UI que usas en el HTML
+  imports: [
+    CommonModule, 
+    HeaderMenuComponent,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonList,
+    IonItem,
+    IonAvatar,
+    IonLabel,
+    IonNote,
+    IonIcon,
+    IonButton,
+    IonRippleEffect,
+    IonFab,
+    IonFabButton
+  ]
 })
 export class PrincipalPage implements OnInit, ViewWillEnter {
 
