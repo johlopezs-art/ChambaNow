@@ -14,33 +14,55 @@
         
         <!-- Título -->
         <ion-item fill="outline" class="custom-input ion-margin-bottom">
-          <ion-label position="floating">Nombre del Trabajo</ion-label>
-          <ion-input formControlName="titulo" placeholder="Ej: Se busca Pintor"></ion-input>
-          <ion-icon slot="end" name="briefcase-outline" class="input-icon"></ion-icon>
+          <ion-icon slot="start" name="briefcase-outline" color="primary"></ion-icon>
+          <ion-input 
+            label="Nombre del Trabajo" 
+            labelPlacement="floating"
+            formControlName="titulo" 
+            placeholder="Ej: Se busca Pintor"
+            mode="md">
+          </ion-input>
         </ion-item>
-        <ion-note color="danger" *ngIf="form.get('titulo')?.invalid && form.get('titulo')?.touched">
+        <ion-note color="danger" *ngIf="form.get('titulo')?.invalid && form.get('titulo')?.touched" class="ion-margin-bottom d-block">
           Mínimo 5 caracteres.
         </ion-note>
 
         <!-- Profesión -->
         <ion-item fill="outline" class="custom-input ion-margin-bottom">
-          <ion-label position="floating">Profesión / Ocupación</ion-label>
-          <ion-input formControlName="profesion" placeholder="Ej: Pintor, Albañil"></ion-input>
-          <ion-icon slot="end" name="hammer-outline" class="input-icon"></ion-icon>
+          <ion-icon slot="start" name="hammer-outline" color="primary"></ion-icon>
+          <ion-input 
+            label="Profesión / Ocupación" 
+            labelPlacement="floating"
+            formControlName="profesion" 
+            placeholder="Ej: Pintor, Albañil"
+            mode="md">
+          </ion-input>
         </ion-item>
 
         <!-- Sueldo -->
         <ion-item fill="outline" class="custom-input ion-margin-bottom">
-          <ion-label position="floating">Sueldo Ofrecido</ion-label>
-          <ion-input formControlName="sueldo" type="text" placeholder="$ CLP"></ion-input>
-          <ion-icon slot="end" name="cash-outline" class="input-icon"></ion-icon>
+          <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+          <ion-input 
+            label="Sueldo Ofrecido" 
+            labelPlacement="floating"
+            formControlName="sueldo" 
+            type="text" 
+            placeholder="$ CLP"
+            mode="md">
+          </ion-input>
         </ion-item>
 
         <!-- Especificación -->
         <ion-item fill="outline" class="custom-input ion-margin-bottom">
-          <ion-label position="floating">Especificación del Trabajo</ion-label>
-          <ion-textarea formControlName="especificacion" rows="4" placeholder="Describe los detalles..."></ion-textarea>
-          <ion-icon slot="end" name="document-text-outline" class="input-icon" style="margin-top: 10px;"></ion-icon>
+          <ion-icon slot="start" name="document-text-outline" color="primary" class="ion-align-self-start ion-margin-top"></ion-icon>
+          <ion-textarea 
+            label="Especificación del Trabajo" 
+            labelPlacement="floating"
+            formControlName="especificacion" 
+            rows="4" 
+            placeholder="Describe los detalles..."
+            mode="md">
+          </ion-textarea>
         </ion-item>
         <ion-note color="danger" *ngIf="form.get('especificacion')?.invalid && form.get('especificacion')?.touched">
           Mínimo 10 caracteres.
@@ -50,7 +72,7 @@
     </ion-card>
 
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" size="large" [disabled]="form.invalid">
+      <ion-button expand="block" type="submit" size="large" [disabled]="form.invalid" shape="round">
         Publicar Solicitud
         <ion-icon slot="end" name="save-outline"></ion-icon>
       </ion-button>

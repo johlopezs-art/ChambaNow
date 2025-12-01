@@ -1,7 +1,21 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicModule, ToastController, LoadingController } from '@ionic/angular';
+// Importaciones explícitas de componentes Ionic Standalone
+import { 
+  IonContent, 
+  IonCard, 
+  IonCardContent, 
+  IonItem, 
+  IonLabel, 
+  IonInput, 
+  IonIcon, 
+  IonTextarea, 
+  IonNote, 
+  IonButton, 
+  ToastController, 
+  LoadingController 
+} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 import { addIcons } from 'ionicons';
@@ -16,7 +30,22 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './solicitudes.page.html',
   styleUrls: ['./solicitudes.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, HeaderMenuComponent]
+  // IMPORTANTE: Agregamos todos los componentes importados
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    HeaderMenuComponent,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonIcon,
+    IonTextarea,
+    IonNote,
+    IonButton
+  ]
 })
 export class SolicitudesPage implements OnInit {
 

@@ -1,4 +1,98 @@
+// Fondo suave
+ion-content {
+  --background: #f4f5f8;
+}
 
+// Estilos del encabezado
+.header-job {
+  margin-top: 20px;
+  
+  .job-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ion-color-dark); // Asegura color oscuro
+    margin-bottom: 5px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--ion-color-medium);
+    margin-top: 0;
+  }
+}
+
+// Tarjeta de detalles
+.detail-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-top: 20px;
+  background: white;
+}
+
+// Items de información
+.info-item {
+  --background: transparent;
+  --padding-start: 0;
+  
+  // IMPORTANTE: Asegurar legibilidad
+  ion-label {
+    h3 {
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+      font-weight: 500;
+    }
+    p {
+      font-size: 1.1rem;
+      color: var(--ion-color-dark);
+      font-weight: 600;
+    }
+    .salary-text {
+      color: var(--ion-color-success);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+  }
+
+  ion-icon {
+    font-size: 1.8rem;
+    margin-right: 15px;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 10px 0;
+}
+
+.description-section {
+  margin-top: 15px;
+  padding-top: 10px;
+  
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444; // Gris oscuro para lectura cómoda
+    white-space: pre-line; // Respeta saltos de línea
+  }
+}
+
+// Animación de carga (Overlay)
 .overlay-animacion {
   position: fixed;
   top: 0;
@@ -12,7 +106,6 @@
   z-index: 9999; 
 }
 
-
 .animacion-contenedor {
   background: #ffffff;
   padding: 30px;
@@ -21,7 +114,6 @@
   text-align: center;
   animation: aparecer 0.4s ease-in-out;
 }
-
 
 @keyframes aparecer {
   from {

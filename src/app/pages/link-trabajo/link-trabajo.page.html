@@ -13,7 +13,8 @@
     <!-- Encabezado con Imagen -->
     <div class="header-job ion-text-center ion-margin-bottom">
       <ion-avatar class="job-avatar">
-        <img [src]="trabajo.foto_usuario || 'assets/icon/tech.jpg'" 
+        <img [src]="trabajo.foto_usuario || ''" 
+             alt="Foto usuario"
              onerror="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'">
       </ion-avatar>
       <h1 class="ion-margin-top">{{ trabajo.titulo }}</h1>
@@ -59,7 +60,7 @@
         <ion-icon name="briefcase-outline" slot="end"></ion-icon>
       </ion-button>
 
-      <ion-button *ngIf="yaPostulado" expand="block" size="large" color="medium" disabled shape="round">
+      <ion-button *ngIf="yaPostulado" expand="block" size="large" color="medium" disabled="true" shape="round">
         Ya has postulado
         <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
       </ion-button>

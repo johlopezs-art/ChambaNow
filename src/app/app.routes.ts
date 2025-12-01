@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth-guard'; // Asegúrate de que el nombre del archivo sea correcto
+import { AuthGuard } from './guards/auth-guard'; // Importamos el Guard
 
 export const routes: Routes = [
   // --- RUTAS PÚBLICAS ---
@@ -19,50 +19,40 @@ export const routes: Routes = [
 
   // --- RUTAS PROTEGIDAS (Necesitan Login 🔒) ---
   {
-    path: 'home', 
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'principal',
     loadComponent: () => import('./pages/principal/principal.page').then( m => m.PrincipalPage),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard] // Protegido
+  },
+  {
+    path: 'solicitudes',
+    loadComponent: () => import('./pages/solicitudes/solicitudes.page').then( m => m.SolicitudesPage),
+    canActivate: [AuthGuard] // Protegido
+  },
+  {
+    path: 'bandeja',
+    loadComponent: () => import('./pages/bandeja/bandeja.page').then( m => m.BandejaPage),
+    canActivate: [AuthGuard] // Protegido
   },
   {
     path: 'datos-personales',
     loadComponent: () => import('./pages/datos-personales/datos-personales.page').then( m => m.DatosPersonalesPage),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard] // Protegido
   },
   {
     // Ruta con parámetro (ID) para ver detalle de trabajo
     path: 'link-trabajo/:id',
-    loadComponent: () => import('./pages/link-trabajo/link-trabajo.page').then(m => m.LinkTrabajoPage),
-    canActivate: [AuthGuard]
+    loadComponent: () => import('./pages/link-trabajo/link-trabajo.page').then( m => m.LinkTrabajoPage),
+    canActivate: [AuthGuard] // Protegido
   },
   {
-    path: 'solicitudes', 
-    loadComponent: () => import('./pages/solicitudes/solicitudes.page').then( m => m.SolicitudesPage),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'bandeja', // Nueva ruta para ver postulaciones y ofertas
-    loadComponent: () => import('./pages/bandeja/bandeja.page').then( m => m.BandejaPage),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'agregar',
-    loadComponent: () => import('./pages/agregar/agregar.page').then( m => m.AgregarPage),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'modificar',
+    path: 'modificar', // Si decides usarla en el futuro
     loadComponent: () => import('./pages/modificar/modificar.page').then( m => m.ModificarPage),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard] // Protegido
   },
 
   // --- MANEJO DE ERRORES (SIEMPRE AL FINAL) ---
   {
-    path: '**',
+    path: '**', // Ruta comodín para 404
     loadComponent: () => import('./pages/error404/error404.page').then( m => m.Error404Page)
-  }
+  },
 ];

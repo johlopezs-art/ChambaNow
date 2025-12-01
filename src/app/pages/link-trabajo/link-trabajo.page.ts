@@ -1,7 +1,20 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController, LoadingController } from '@ionic/angular';
+// Importaciones explícitas de componentes Ionic Standalone
+import { 
+  IonContent, 
+  IonSpinner, 
+  IonAvatar, 
+  IonCard, 
+  IonCardContent, 
+  IonItem, 
+  IonIcon, 
+  IonLabel, 
+  IonButton, 
+  ToastController, 
+  LoadingController 
+} from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 import { ApiService } from '../../services/api';
@@ -15,7 +28,21 @@ import { briefcaseOutline, cashOutline, locationOutline, personCircleOutline, ch
   templateUrl: './link-trabajo.page.html',
   styleUrls: ['./link-trabajo.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, HeaderMenuComponent]
+  // IMPORTANTE: Agregamos todos los componentes importados
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    HeaderMenuComponent,
+    IonContent, 
+    IonSpinner, 
+    IonAvatar, 
+    IonCard, 
+    IonCardContent, 
+    IonItem, 
+    IonIcon, 
+    IonLabel, 
+    IonButton
+  ]
 })
 export class LinkTrabajoPage implements OnInit {
 
@@ -99,7 +126,7 @@ export class LinkTrabajoPage implements OnInit {
     } catch (error: any) {
       // Manejo de error si ya postuló
       if (error.status === 400) {
-        this.mostrarToast('⚠ Ya has postulado a este trabajo.', 'warning');
+        this.mostrarToast('⚠ No se puede postular.', 'warning');
         this.yaPostulado = true;
       } else {
         this.mostrarToast('Error al postular. Intenta nuevamente.', 'danger');
