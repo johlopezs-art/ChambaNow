@@ -1,8 +1,6 @@
-
 $chambanow-blue: #0078ff;
 $chambanow-orange: #ff7b00;
 $chambanow-light: #f8f9fb;
-
 
 ion-content {
   --background: linear-gradient(180deg, #ffffff 0%, #e9f3ff 100%);
@@ -17,7 +15,7 @@ ion-content {
 
 .content-wrapper {
   padding: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem; /* Ajustado un poco para mejor centrado visual */
 }
 
 h1 {
@@ -34,12 +32,12 @@ p {
 }
 
 ion-note {
-  color: $chambanow-orange;
+  // Aseguramos que se vea el color naranja definido arriba o el de la variable
+  color: $chambanow-orange; 
   font-weight: 500;
   display: block;
   margin-top: 0.5rem;
 }
-
 
 .return-button {
   position: absolute;
@@ -48,26 +46,29 @@ ion-note {
   transform: translateX(-50%);
   width: 80%;
   max-width: 300px;
-  --background: $chambanow-blue;
+  
+  // Estilos nativos del botón Ionic para sobrescribir
+  --background: #{$chambanow-blue}; // Interpolación para variables SCSS en propiedades CSS
   --color: white;
   --border-radius: 12px;
+  --box-shadow: 0 6px 12px rgba(0, 120, 255, 0.3); // Sombra azul aproximada
+  
   font-weight: 600;
-  box-shadow: 0 6px 12px rgba($chambanow-blue, 0.3);
   transition: 0.3s ease;
 
+  // Efecto hover (aunque en móvil no se nota tanto)
   &:hover {
-    --background: $chambanow-orange;
-    box-shadow: 0 6px 12px rgba($chambanow-orange, 0.4);
+    --background: #{$chambanow-orange};
+    --box-shadow: 0 6px 12px rgba(255, 123, 0, 0.4);
   }
 }
 
-
-ng-lottie {
+// Estilo para el reproductor Lottie (opcional si ya tiene estilo inline)
+lottie-player {
   display: block;
   margin: 0 auto;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
-
 
 @keyframes fadeIn {
   from {

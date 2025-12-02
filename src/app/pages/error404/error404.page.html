@@ -8,10 +8,16 @@
 
   <div class="content-wrapper">
     
-    <ng-lottie 
-      [options]="options"
-      style="width: 250px; height: 250px; margin: auto;"
-    ></ng-lottie>
+    <!-- Animación Lottie usando el Web Component (igual que en LinkTrabajo) -->
+    <!-- Asegúrate de que el archivo JSON exista en: src/assets/animation/error404.json -->
+    <lottie-player 
+      src="assets/animation/error404.json" 
+      background="transparent" 
+      speed="1" 
+      style="width: 250px; height: 250px; margin: auto;" 
+      loop 
+      autoplay>
+    </lottie-player>
 
     <h1 class="ion-margin-top">Página No Encontrada</h1>
     <p>Lo sentimos, la ruta a la que intentas acceder no existe en esta aplicación.</p>
@@ -23,7 +29,7 @@
 
   
   <ion-button 
-    routerLink="/login" 
+    routerLink="/principal" 
     expand="block" 
     fill="solid" 
     color="primary" 
